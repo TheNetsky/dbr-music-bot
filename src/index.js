@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Base = require('./Struct/Client');
+const Base = require('./Base/Client');
 
 const Client = new Base();
 

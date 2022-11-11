@@ -5,10 +5,9 @@ const { Manager } = require('erela.js');
 const { default: Spotify } = require('better-erela.js-spotify');
 const { default: AppleMusic } = require('better-erela.js-apple');
 const Jsoning = require('jsoning');
-const { CreatePrompt } = require('../Utility/CreatePrompt');
 const Deezer = require('../Plugin/Deezer');
 const config = require('../config');
-const { CreateEmbed } = require('../Utility/CreateEmbed');
+const Utils = require('../Utility/Utils.js')
 const { logger } = require('../Utility/Logger');
 require('../Extenders/Node');
 
@@ -28,6 +27,7 @@ module.exports = class Client extends AkairoClient {
 
     this.logger = logger;
     this.config = config;
+    this.utils = Utils
     this.db = new Jsoning('db.json');
     this.erela = new Manager({
       autoPlay: true,
@@ -50,11 +50,11 @@ module.exports = class Client extends AkairoClient {
       defaultCooldown: 3000,
       argumentDefaults: {
         prompt: {
-          modifyStart: (message, text) => ({ embeds: [CreateEmbed('info', CreatePrompt(text))] }),
-          modifyRetry: (message, text) => ({ embeds: [CreateEmbed('info', CreatePrompt(text))] }),
-          modifyTimeout: () => ({ embeds: [CreateEmbed('warn', '⛔ | command timeout.')] }),
-          modifyEnded: () => ({ embeds: [CreateEmbed('warn', '⛔ | command ended.')] }),
-          modifyCancel: () => ({ embeds: [CreateEmbed('info', '⛔ | invalid arguments, command session has ended.')] }),
+          modifyStart: (message, text) => ({ embeds: [this.utils.CreateEmbed().setDescription(this.utils.CreatePrompt(text))] }),
+          modifyRetry: (message, text) => ({ embeds: [this.utils.CreateEmbed().setDescription(this.utils.CreatePrompt(text))] }),
+          modifyTimeout: () => ({ embeds: [this.utils.CreateEmbed('YELLOW').setDescription('⛔ | command timeout.')] }),
+          modifyEnded: () => ({ embeds: [this.utils.CreateEmbed('YELLOW').setDescription('⛔ | command ended.')] }),
+          modifyCancel: () => ({ embeds: [this.utils.CreateEmbed().setDescription('⛔ | invalid arguments, command session has ended.')] }),
           retries: 3,
           time: 30000,
         },
@@ -62,7 +62,7 @@ module.exports = class Client extends AkairoClient {
     }).on('commandFinished', (msg, command) => {
       this.logger.info(`[${msg.author.tag}] USING [${command.id.toUpperCase()}] COMMANDS`);
     }).on('cooldown', async (msg, command, remaining) => {
-      const awaitMsg = await msg.channel.send({ embeds: [CreateEmbed('warn', `Chill.. wait ${(remaining / 1000).toFixed(2)} second(s) to use command again`)] });
+      const awaitMsg = await msg.channel.send({ embeds: [this.utils.CreateEmbed('YELLOW').setDescription(`Chill.. wait ${(remaining / 1000).toFixed(2)} second(s) to use command again`)] });
       setTimeout(() => awaitMsg.delete(), remaining);
       this.logger.warn(`[${msg.author.tag}] GETTING RATE LIMIT ON [${command.id.toUpperCase()}] COMMANDS`);
     });

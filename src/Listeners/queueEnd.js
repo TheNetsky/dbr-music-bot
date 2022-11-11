@@ -1,5 +1,4 @@
 const { Listener } = require('discord-akairo');
-const { CreateEmbed } = require('../Utility/CreateEmbed');
 
 module.exports = class queueEnd extends Listener {
   constructor() {
@@ -11,7 +10,7 @@ module.exports = class queueEnd extends Listener {
 
   exec(player) {
     const QueueChannel = this.client.channels.cache.get(player.textChannel);
-    QueueChannel.send({ embeds: [CreateEmbed('info', '⏹  | queue has ended.')] });
+    QueueChannel.send({ embeds: [this.client.utils.CreateEmbed().setDescription('⏹  | queue has ended.')] });
     player.destroy();
   }
 };

@@ -1,6 +1,5 @@
 /* eslint no-restricted-syntax: "off" */
 const { Command } = require('discord-akairo');
-const { CreateEmbed } = require('../../Utility/CreateEmbed');
 
 module.exports = class PingCommand extends Command {
   constructor() {
@@ -23,7 +22,7 @@ module.exports = class PingCommand extends Command {
   async exec(msg, { command }) {
     try {
       if (!command) {
-        const embed = CreateEmbed('info')
+        const embed = this.client.utils.CreateEmbed()
           .addFields(`${this.client.user.username} command's`, `${this.client.config.prefix}help [command]`);
 
         for (const category of this.handler.categories.values()) {
@@ -32,14 +31,14 @@ module.exports = class PingCommand extends Command {
         return msg.channel.send({ embeds: [embed] });
       }
 
-      const embed = CreateEmbed('info')
+      const embed = this.client.utils.CreateEmbed()
         .addFields('Description', `${command.description.content ? command.description.content : 'None'} ${command.description.ownerOnly ? '\n**[Owner Only]**' : '[Public Use]'}`)
         .addFields('Alias', command.aliases.length > 1 ? `\`${command.aliases.join('` `')}\`` : 'None.', true)
         .addFields('Examples', command.description.examples && command.description.examples.length ? `\`${command.aliases[0]} ${command.description.examples.join(`\`\n\`${command.aliases[0]} `)}\`` : 'None.');
       return msg.channel.send({ embeds: [embed] });
     } catch (e) {
       this.client.logger.error(e.message);
-      return msg.channel.send({ embeds: [CreateEmbed('warn', '⛔ | An error occured')] });
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });
     }
   }
 };

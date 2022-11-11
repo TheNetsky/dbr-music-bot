@@ -1,11 +1,11 @@
 const { Command } = require('discord-akairo');
 
-module.exports = class PauseCommand extends Command {
+module.exports = class ClearCommand extends Command {
   constructor() {
-    super('pause', {
-      aliases: ['pause'],
+    super('clear', {
+      aliases: ['clear', 'clean', 'empty'],
       description: {
-        content: 'Pause current track',
+        content: 'Clear the queue',
       },
       category: 'Music',
       cooldown: 3000,
@@ -27,8 +27,8 @@ module.exports = class PauseCommand extends Command {
         return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel same as me to do this.')] });
       }
 
-      GuildPlayers.pause(true);
-      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription('👌 | Paused guild queue')] });
+      GuildPlayers.clear();
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription('💥 | Queue has been cleared')] });
     } catch (e) {
       this.client.logger.error(e.message);
       return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });
@@ -42,6 +42,7 @@ module.exports = class PauseCommand extends Command {
   async executeSlash(interaction) {
     try {
       const GuildPlayers = this.client.erela.players.get(interaction.guild.id);
+
       if (!GuildPlayers) {
         return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription('⛔ | There no music playing in this guild')] });
       }
@@ -54,8 +55,8 @@ module.exports = class PauseCommand extends Command {
         return interaction.editReply({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel same as me to do this.')] });
       }
 
-      GuildPlayers.pause(true);
-      return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription('👌 | Paused guild queue')] });
+      GuildPlayers.clear();
+      return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription('💥 | Queue has been cleared')] });
     } catch (e) {
       this.client.logger.error(e.message);
       return interaction.editReply({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });

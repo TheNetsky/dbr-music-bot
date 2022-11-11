@@ -1,6 +1,4 @@
 const { Command } = require('discord-akairo');
-const { CreateEmbed } = require('../../Utility/CreateEmbed');
-const { chunk } = require('../../Utility/Chunk');
 const Pagination = require('../../Utility/Pagination');
 
 module.exports = class QueueCommand extends Command {
@@ -19,12 +17,12 @@ module.exports = class QueueCommand extends Command {
     try {
       const GuildPlayers = this.client.erela.players.get(msg.guild.id);
       if (!GuildPlayers) {
-        return msg.channel.send({ embeds: [CreateEmbed('info', '⛔ | There no music playing in this guild')] });
+        return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription('⛔ | There no music playing in this guild')] });
       }
 
       if (GuildPlayers.queue.size < 1) {
         return msg.reply({
-          embeds: [CreateEmbed('info', `
+          embeds: [this.client.utils.CreateEmbed(`
             Now Playing:
             \`\`\`css${GuildPlayers?.queue.current?.title} | [${GuildPlayers?.queue.current?.requester.username}]\`\`\`
             Next Track:
@@ -33,8 +31,8 @@ module.exports = class QueueCommand extends Command {
         });
       }
 
-      const pages = chunk(GuildPlayers?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester}]`), 7);
-      const embed = CreateEmbed('info').setAuthor({
+      const pages = this.bot.utils.chunk(GuildPlayers?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester}]`), 7);
+      const embed = this.client.utils.CreateEmbed('info').setAuthor({
         name: `${msg.guild?.name} queue list`,
         iconURL: msg.guild.iconURL(),
       });
@@ -47,7 +45,7 @@ module.exports = class QueueCommand extends Command {
       }).start();
     } catch (e) {
       this.client.logger.error(e.message);
-      return msg.channel.send({ embeds: [CreateEmbed('warn', '⛔ | An error occured')] });
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });
     }
   }
 };
