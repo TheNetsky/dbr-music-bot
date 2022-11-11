@@ -31,7 +31,7 @@ module.exports = class QueueCommand extends Command {
         });
       }
 
-      const pages = this.bot.utils.chunk(GuildPlayers?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester}]`), 7);
+      const pages = this.client.utils.chunk(GuildPlayers?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester}]`), 7);
       const embed = this.client.utils.CreateEmbed('info').setAuthor({
         name: `${msg.guild?.name} queue list`,
         iconURL: msg.guild.iconURL(),
