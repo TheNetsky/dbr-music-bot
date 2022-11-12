@@ -1,5 +1,5 @@
-import { Command } from 'eris';
-import { Client } from 'src/base/Client';
+import { Command } from 'eris'
+import { Client } from 'src/base/Client'
 
 
 export default class PlayCommand extends Command {
