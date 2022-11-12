@@ -1,13 +1,15 @@
 import 'dotenv/config'
 import { CommandClient } from 'eris'
-import readdirRecursive from '../Util/ReaddirRecursive';
+import readdirRecursive from '../utils/ReaddirRecursive';
+import { EventHandler } from 'handlers/EventHandler'
+import { CommandHandler } from 'handlers/CommandHandler'
 import { join } from 'path'
 import { Manager } from 'erela.js'
 import { Spotify } from 'better-erela.js-spotify'
 import Jsoning from 'jsoning'
 import config from '../../config.json'
-import { Utils } from '../Util/Utils'
-import { logger } from '../Util/Logger'
+import { Utils } from '../utils/Utils'
+import { logger } from '../utils/Logger'
 
 
 export class Client extends CommandClient {
@@ -23,12 +25,15 @@ export class Client extends CommandClient {
         ignoreBots: true,
         ignoreSelf: true,
         defaultHelpCommand: false,
-      });
+      })
+
+    new EventHandler(this).loadEvents()
+    new CommandHandler(this).loadCommands()
   }
 
+  public utils = new Utils()
   public db = new Jsoning('db.json')
   public logger = logger
-  public utils = new Utils()
   public config = config
 
   public erela = new Manager({
@@ -39,30 +44,11 @@ export class Client extends CommandClient {
     send: (id, payload) => {
       const guild = this.guilds.get(id);
       if (guild) guild.shard.sendWS(payload.op, payload.d);
-    },
+    }
   })
 
-  public loadCommands() {
-    for (const files of readdirRecursive(join(__dirname, '..', 'Commands'))) {
-      const commandFiles = require(files).default;
-      const command = new commandFiles(this);
-
-      logger.info(`registering ${command.label} command with category ${command.category}`)
-
-      const erisCommand = this.registerCommand(command.label, command.execute)
-
-      erisCommand.category = command.category;
-      erisCommand.client = command.client;
-      erisCommand.description = command.description;
-      for (const aliases of command.aliases) {
-        this.registerCommandAlias(aliases, command.label);
-      }
-    }
-  }
-
   public init() {
-    this.connect();
-    this.loadCommands();
+    this.connect()
   }
 }
 

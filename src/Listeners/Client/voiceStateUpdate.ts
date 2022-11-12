@@ -1,30 +1,31 @@
-import { Client } from '../../Base/Client'
+import { Client } from '../../base/Client'
+import { Event } from 'structures/Event'
+import { VoiceChannel } from 'eris'
 
-export default class listener {
-  constructor(public client: Client) { }
-  public type = 'on';
-  public emitter = 'client'
-  public event = 'voiceStateUpdate'
 
-  public async run(x) {
-    console.log(x)
-    /*
-       const channel = await this.client.getChannel(member.channel_id) as VoiceChannel
-    if (!channel) return
+export default class voiceStateUpdateEvent extends Event {
+  constructor(client: Client) {
+    super(client, 'voiceStateUpdate', false)
+  }
+
+  async execute(client: Client, oldState, newState) {
+
+    if (!oldState?.channel) return
+    const channel = await client.getChannel(oldState.channel.id) as VoiceChannel
 
     if (channel.voiceMembers.filter((member) => !member.user.bot).length === 0) {
-      const GuildPlayers = this.client.erela.players.get(oldState.guild.id)
+      const GuildPlayers = client.erela.players.get(oldState.guild.id)
 
       if (!GuildPlayers) {
-        if (channel.voiceMembers.find(x => x.id == this.client.user.id)) {
-          await channel.leave()
+        if (channel.voiceMembers.find(x => x.id == client.user.id)) {
+          channel.leave()
         }
         return
       }
 
       GuildPlayers.destroy()
-      this.client.logger.info('ALL USERS LEFT THE VOICE CHANNEL, PLAYER DESTOYED!')
-      */
-    //}
+      client.logger.info('ALL USERS LEFT THE VOICE CHANNEL, PLAYER DESTOYED!')
+    }
+
   }
 }

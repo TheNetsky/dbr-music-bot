@@ -1,13 +1,14 @@
+import { Client } from '../../base/Client'
+import { Event } from 'structures/Event'
 import { Player } from 'erela.js'
-import { Client } from '../Base/Client'
 
-export default class listener {
-  constructor(public client: Client) { }
-  public type = 'once';
-  public emitter = 'erela';
-  public event = 'socketClosed'
 
-  public async run(player: Player, payload) {
+export default class socketClosedEvent extends Event {
+  constructor(client: Client) {
+    super(client, 'socketClosed', true)
+  }
+
+  async execute(client: Client, player: Player, payload) {
     const allowedOpCodes = ['4006', '4015', '4011', '4012']
 
 

@@ -1,5 +1,4 @@
 import { stripIndents } from 'common-tags'
-import { ColorResolvable } from 'discord.js'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
@@ -7,8 +6,9 @@ dayjs.extend(duration)
 export class Utils {
 
     // https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
-    CreateEmbed(color: ColorResolvable | Number | string, content: object): any {
-        switch (String(color).toUpperCase()) {
+    CreateEmbed(embed): any {
+        let color: number
+        switch (String(embed?.color).toUpperCase()) {
             case 'YELLOW':
                 color = 16776960
                 break
@@ -18,7 +18,7 @@ export class Utils {
             default:
                 color = 9807270
         }
-        return Object.assign(content, { color: color })
+        return Object.assign(embed, { color: color })
     }
 
     CreatePrompt(prompt) {

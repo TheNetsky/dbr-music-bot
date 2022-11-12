@@ -1,12 +1,14 @@
-import { Client } from '../../Base/Client'
+import { Client } from '../../base/Client'
+import { Event } from 'structures/Event'
+import { VoicePacket } from 'erela.js';
 
-export default class listener {
-  constructor(public client: Client) { }
-  public type = 'on';
-  public emitter = 'client'
-  public event = 'rawWS'
 
-  public async run(packet) {
-    this.client.erela.updateVoiceState(packet)
+export default class rawWSEvent extends Event {
+  constructor(client: Client) {
+    super(client, 'rawWS', false)
+  }
+
+  async execute(client: Client, packet: VoicePacket) {
+    client.erela.updateVoiceState(packet)
   }
 }

@@ -1,20 +1,21 @@
-import { TextChannel } from 'eris'
+import { Client } from '../../base/Client'
+import { Event } from 'structures/Event'
 import { Player, Track } from 'erela.js'
-import { Client } from '../Base/Client'
+import { TextChannel } from 'eris'
 
-export default class listener {
-  constructor(public client: Client) { }
-  public type = 'once';
-  public emitter = 'erela';
-  public event = 'trackStart'
 
-  public async run(player: Player, track: Track) {
-    const QueueChannel = this.client.getChannel(player.textChannel ?? '') as TextChannel
+export default class trackStartEvent extends Event {
+  constructor(client: Client) {
+    super(client, 'trackStart', true)
+  }
+
+  async execute(client: Client, player: Player, track: Track) {
+    const QueueChannel = client.getChannel(player.textChannel ?? '') as TextChannel
     if (!QueueChannel) return
 
 
     const sendMessage = await QueueChannel.createMessage({
-      embeds: [this.client.utils.CreateEmbed('', {
+      embeds: [client.utils.CreateEmbed({
         title: `${track.title}`,
         url: `${track.uri}`,
         author: {

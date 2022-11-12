@@ -6,8 +6,8 @@
     "configurations": [
         
         {
-            "command": "node src",
-            "name": "start normal",
+            "command": "npm run dev",
+            "name": "Start Nodemon",
             "request": "launch",
             "type": "node-terminal"
         }

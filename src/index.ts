@@ -1,8 +1,6 @@
-import { Client } from './Base/Client'
-import Listenerhandler from './Util/listenerHandler'
+import { Client } from './base/Client'
 
 
 const Base = new Client()
 
 Base.init()
-new Listenerhandler(Base)
