@@ -1,4 +1,4 @@
-const { Listener } = require('discord-akairo');
+const { Listener } = require('discord-akairo')
 
 module.exports = class Raw extends Listener {
   constructor() {
@@ -6,10 +6,10 @@ module.exports = class Raw extends Listener {
       emitter: 'client',
       category: 'client',
       event: 'raw',
-    });
+    })
   }
 
   exec(d) {
-    this.client.erela.updateVoiceState(d);
+    this.client.erela.updateVoiceState(d)
   }
-};
+}

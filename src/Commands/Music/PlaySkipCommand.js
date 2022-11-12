@@ -1,11 +1,11 @@
 const { Command } = require('discord-akairo')
 
-module.exports = class PlayCommand extends Command {
+module.exports = class PlaySkipCommand extends Command {
   constructor() {
-    super('play', {
-      aliases: ['play', 'p'],
+    super('playskip', {
+      aliases: ['playskip', 'ps'],
       description: {
-        content: 'Play some music.',
+        content: 'Skip and play current song.',
       },
       category: 'Music',
       cooldown: 3000,
@@ -43,6 +43,7 @@ module.exports = class PlayCommand extends Command {
         return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel to do this.')] })
       }
 
+      // If no play exists
       if (!GuildPlayers) {
         const player = await this.client.erela.create({
           guild: msg.guild.id,
@@ -65,19 +66,19 @@ module.exports = class PlayCommand extends Command {
         return player.play()
       }
 
+      // If player already exists
       if (msg.member.voice.channelId !== GuildPlayers.voiceChannel) {
         return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel same as me to do this.')] })
       }
 
       if (MusicTracks.loadType === 'PLAYLIST_LOADED') {
-        for (const track of MusicTracks.tracks) {
-          GuildPlayers.queue.add(track)
-        }
-        return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Added Playlist ${MusicTracks.playlist.name} [${msg.author}] [\`${MusicTracks.tracks.length} tracks\`]`)] })
+        return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you can only playskip with a single track.')] })
       }
-      GuildPlayers.queue.add(MusicTracks.tracks[0])
 
-      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Added track \`${MusicTracks.tracks[0].title}\` [${msg.author}]`)] })
+      await GuildPlayers.queue.unshift(MusicTracks.tracks[0])
+      await GuildPlayers.stop()
+
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Playskipped track \`${GuildPlayers.queue.current.title}\``)] })
       
     } catch (e) {
       this.client.logger.error(e.message)
@@ -94,7 +95,7 @@ module.exports = class PlayCommand extends Command {
     if (!query) {
       interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription('⛔ | Input music name.')] })
     }
-    
+
     const MusicTracks = await this.client.erela.search(query, interaction.user)
     if (MusicTracks.loadType === 'NO_MATCHES') {
       return interaction.editReply({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | No result found.')] })
@@ -109,6 +110,7 @@ module.exports = class PlayCommand extends Command {
       return interaction.editReply({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel to do this.')] })
     }
 
+    // If no play exists
     if (!GuildPlayers) {
       const player = await this.client.erela.create({
         guild: interaction.guild.id,
@@ -131,18 +133,18 @@ module.exports = class PlayCommand extends Command {
       return player.play()
     }
 
+    // If player already exists
     if (interaction.member.voice.channelId !== GuildPlayers.voiceChannel) {
       return interaction.editReply({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | you must join voice channel same as me to do this.')] })
     }
 
     if (MusicTracks.loadType === 'PLAYLIST_LOADED') {
-      for (const track of MusicTracks.tracks) {
-        GuildPlayers.queue.add(track)
-      }
-      return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Added Playlist ${MusicTracks.playlist.name} [${interaction.user}] [\`${MusicTracks.tracks.length} tracks\`]`)] })
+      return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription('⛔ | you can only playskip with a single track.')] })
     }
 
-    GuildPlayers.queue.add(MusicTracks.tracks[0])
-    return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Added track \`${MusicTracks.tracks[0].title}\` [${interaction.user}]`)] })
+    await GuildPlayers.queue.unshift(MusicTracks.tracks[0])
+    await GuildPlayers.stop()
+
+    return interaction.editReply({ embeds: [this.client.utils.CreateEmbed().setDescription(`☑ | Playskipped track \`${GuildPlayers.queue.current.title}\``)] })
   }
 }

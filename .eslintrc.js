@@ -15,6 +15,20 @@ module.exports = {
     'consistent-return': 'off',
     'no-return-await': 'off',
     'no-param-reassign': 'off',
+    'no-template-curly-in-string': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'prefer-arrow-callback': 'error',
+    'linebreak-style': [
+      'error',
+      'unix'
+    ],
+    'quotes': [
+      'error',
+      'single'
+    ],
+    'semi': [
+      'error',
+      'never'
+    ]
   },
-};
+}

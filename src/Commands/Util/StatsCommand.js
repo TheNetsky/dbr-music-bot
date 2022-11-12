@@ -1,8 +1,8 @@
-const { stripIndent } = require('common-tags');
-const { Command } = require('discord-akairo');
-const ms = require('ms');
-const Discord = require('discord.js');
-const { version } = require('../../../package.json');
+const { stripIndent } = require('common-tags')
+const { Command } = require('discord-akairo')
+const ms = require('ms')
+const Discord = require('discord.js')
+const { version } = require('../../../package.json')
 
 module.exports = class StatsCommand extends Command {
   constructor() {
@@ -13,7 +13,7 @@ module.exports = class StatsCommand extends Command {
       },
       category: 'Util',
       cooldown: 3000,
-    });
+    })
   }
 
   async exec(msg) {
@@ -34,10 +34,11 @@ Uptime: ${ms(this.client.erela.nodes.values().next().value.stats.uptime, { long:
 Playing Players: ${this.client.erela.nodes.values().next().value.stats.playingPlayers}
 \`\`\`
 `)],
-      });
+      })
     } catch (e) {
-      this.client.logger.error(e.message);
-      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });
+
+      this.client.logger.error(e.message)
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] })
     }
   }
-};
+}

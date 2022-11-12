@@ -1,4 +1,4 @@
-const { Command } = require('discord-akairo');
+const { Command } = require('discord-akairo')
 
 module.exports = class SetDJCommand extends Command {
   constructor() {
@@ -18,7 +18,7 @@ module.exports = class SetDJCommand extends Command {
           },
         },
       ],
-    });
+    })
   }
 
   async exec(msg, { role }) {
@@ -26,8 +26,8 @@ module.exports = class SetDJCommand extends Command {
       // Todo
 
     } catch (e) {
-      this.client.logger.error(e.message);
-      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] });
+      this.client.logger.error(e.message)
+      return msg.channel.send({ embeds: [this.client.utils.CreateEmbed('YELLOW').setDescription('⛔ | An error occured')] })
     }
   }
-};
+}

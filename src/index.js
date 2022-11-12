@@ -1,6 +1,6 @@
-require('dotenv').config();
-const Base = require('./Base/Client');
+require('dotenv').config()
+const Base = require('./Base/Client')
 
-const Client = new Base();
+const Client = new Base()
 
-Client.initialize();
+Client.initialize()
