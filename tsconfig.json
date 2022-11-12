@@ -1,0 +1,66 @@
+
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "checkJs": false,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "traceResolution": false,
+    "allowUnreachableCode": false,
+    "outDir": "dist",
+    "declaration": false,
+    "importHelpers": true,
+    "inlineSources": true,
+    "newLine": "lf",
+    "noEmitHelpers": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "useUnknownInCatchVariables": false,
+    "lib": ["ESNext", "dom", "dom.iterable", "ES2020.BigInt"],
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": false,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "useDefineForClassFields": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "baseUrl": ".",
+    "paths": {
+      "structures/*": ["./src/structures/*"],
+      "handlers/*": ["./src/handlers/*"],
+      "types/*": ["./src/interfaces/*"],
+      "Utility/*": ["src/Util/*"],
+      "@commands/*": ["./src/Commands/*"],
+    },
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "exclude": [
+    "node_modules",
+    ".vscode",
+    ".github",
+  ],
+  "include": [
+    "typings/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "./*.js"
+, "src/Listeners/Client/raw.WSts"  ],
+  "ts-node": {
+    "swc": true
+  }
+}
