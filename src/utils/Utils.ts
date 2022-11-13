@@ -1,6 +1,8 @@
 import { stripIndents } from 'common-tags'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
+import { Player } from 'erela.js'
+import { Message } from 'eris'
 dayjs.extend(duration)
 
 export class Utils {
@@ -39,6 +41,29 @@ export class Utils {
     getDurationString(vidDuration) {
         return dayjs.duration(vidDuration)
             .format('HH:mm:ss')
+    }
+
+    passedUserRequirements(msg: Message, guildPlayer: Player): boolean {
+        let passed = true
+
+        if (!msg.member?.voiceState.channelID) {
+            msg.channel.createMessage({
+                embeds: [this.CreateEmbed({
+                    description: '⛔ | you must join voice channel to do this.'
+                })]
+            })
+            passed = false
+        }
+
+        if (msg.member?.voiceState.channelID !== guildPlayer.voiceChannel) {
+            msg.channel.createMessage({
+                embeds: [this.CreateEmbed({
+                    description: '⛔ | you must join voice channel same as me to do this.'
+                })]
+            })
+            passed = false
+        }
+        return passed
     }
 
 }

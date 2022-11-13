@@ -2,9 +2,9 @@ import { Command } from 'eris'
 import { Client } from 'src/base/Client'
 
 
-export default class SkipCommand extends Command {
+export default class PauseCommand extends Command {
   constructor(public client: Client) {
-    super('skip', async (msg) => {
+    super('pause', async (msg) => {
 
       try {
         const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
@@ -20,11 +20,11 @@ export default class SkipCommand extends Command {
 
         if (!this.client.utils.passedUserRequirements(msg, guildPlayer)) return
 
-        guildPlayer.stop()
+        guildPlayer.pause(true)
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '👌 | Skipped current track.'
+            description: '👌 | Paused guild queue.'
           })]
         })
         return
@@ -33,7 +33,7 @@ export default class SkipCommand extends Command {
         this.client.logger.error(e.message)
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            color: 'YELLOW',
+            color: 'RED',
             description: '⛔ | An error occured.'
           })]
         })
@@ -41,8 +41,7 @@ export default class SkipCommand extends Command {
       }
     },
       {
-        aliases: ['s'],
-        description: 'Skip current playing track.'
+        description: 'Pause current track.'
       })
   }
   public category = 'Music'

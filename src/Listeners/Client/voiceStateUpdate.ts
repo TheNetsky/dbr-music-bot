@@ -8,22 +8,22 @@ export default class voiceStateUpdateEvent extends Event {
     super(client, 'voiceStateUpdate', false)
   }
 
-  async execute(client: Client, oldState, newState) {
+  async execute(client: Client, oldState) {
 
     if (!oldState?.channel) return
     const channel = await client.getChannel(oldState.channel.id) as VoiceChannel
 
     if (channel.voiceMembers.filter((member) => !member.user.bot).length === 0) {
-      const GuildPlayers = client.erela.players.get(oldState.guild.id)
+      const guildPlayers = client.erela.players.get(oldState.guild.id)
 
-      if (!GuildPlayers) {
+      if (!guildPlayers) {
         if (channel.voiceMembers.find(x => x.id == client.user.id)) {
           channel.leave()
         }
         return
       }
 
-      GuildPlayers.destroy()
+      guildPlayers.destroy()
       client.logger.info('ALL USERS LEFT THE VOICE CHANNEL, PLAYER DESTOYED!')
     }
 

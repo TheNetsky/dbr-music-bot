@@ -59,7 +59,7 @@
     "**/*.ts",
     "**/*.tsx",
     "./*.js"
-, "src/Listeners/Client/raw.WSts"  ],
+, "src/listeners/cClient/raw.WSts"  ],
   "ts-node": {
     "swc": true
   }

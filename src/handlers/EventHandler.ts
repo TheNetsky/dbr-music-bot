@@ -3,7 +3,6 @@ import { Client } from '../base/Client'
 import { Event } from '../structures/Event'
 import { resolveFile, validateFile } from '../utils/HandlersUtil'
 
-
 export class EventHandler {
   client: Client
 
@@ -24,11 +23,15 @@ export class EventHandler {
       if (!event) continue
       await validateFile(file, event)
 
+      const isErela = file.includes('erela')
+
       if (!event.execute) {
         throw new TypeError(`[ERROR][events]: execute function is required for events! (${file})`)
       }
 
-      if (event.once) {
+      if (isErela) {
+        this.client.erela.on(event.name as any, event.execute.bind(null, this.client))
+      } else if (event.once) {
         this.client.once(event.name, event.execute.bind(null, this.client))
       } else {
         this.client.on(event.name, event.execute.bind(null, this.client))

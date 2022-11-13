@@ -1,51 +1,28 @@
 import * as DJS from 'eris'
-import { ReactionHandler } from 'eris-reactions'
+import * as EmbedPaginator from 'eris-pagination'
 
-const EMOJIS = ['⏪', '⬅️', '🚫', '➡️', '⏩']
-
-export abstract class Pagination {
+export class Pagination {
+  client: DJS.Client
   msg: DJS.Message
-  payload: any
-  constructor(msg, payload) {
-    this.msg = msg;
-    this.payload = payload;
+  pages: Array<any>
+  constructor(client, msg, pages) {
+    this.client = client
+    this.msg = msg
+    this.pages = pages
   }
+
 
   async start() {
-    const { embed } = this.payload;
-    const { pages } = this.payload;
-    let index = 0;
 
-    this.payload.edit.call(this, index, embed, pages[index]);
-
-    const msg = await this.msg.channel.createMessage({ embeds: [embed] });
-
-    if (pages.length < 2) return undefined;
-
-    for (const emoji of EMOJIS) await msg.addReaction(emoji);
-    const filter = (m, user) => EMOJIS.includes(m.emoji.name) && user.id === this.msg.author.id;
-
-    while (true) {
-      const responses = await ReactionHandler.collectReactions(msg, filter, { maxMatches: 1, time: 30000 })
-      if (!responses.size) break;
-
-      const emoji = responses.first()?.emoji.name;
-      if (emoji === EMOJIS[0]) {
-        index -= 10;
-      } else if (emoji === EMOJIS[1]) {
-        index--;
-      } else if (emoji === EMOJIS[3]) {
-        index++;
-      } else if (emoji === EMOJIS[4]) {
-        index += 10;
-      } else {
-        msg.delete();
-        break;
-      }
-
-      index = ((index % pages.length) + pages.length) % pages.length;
-      this.payload.edit.call(this, index, embed, pages[index]);
-      await msg.edit({ embeds: [embed] });
+    const options = {
+      showPageNumbers: false,
+      extendedButtons: true,
+      firstButton : '⏮',
+      lastButton : '⏭',
+      deleteButton : '🗑'
     }
+
+    await EmbedPaginator.createPaginationEmbed(this.msg, this.pages, options)
   }
-};
+}
+

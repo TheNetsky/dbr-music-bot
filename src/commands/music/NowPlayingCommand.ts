@@ -4,11 +4,11 @@ import { Client } from 'src/base/Client'
 
 export default class NowPlayingCommand extends Command {
   constructor(public client: Client) {
-    super('nowplaying', async (msg, args) => {
+    super('nowplaying', async (msg) => {
 
       try {
-        const GuildPlayers = this.client.erela.players.get(msg.guildID ?? '')
-        if (!GuildPlayers) {
+        const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
+        if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
               color: 'YELLOW',
@@ -20,21 +20,21 @@ export default class NowPlayingCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            title: `${GuildPlayers.trackRepeat ? '🔂' : GuildPlayers.paused ? '⏸' : '▶️'} | ${GuildPlayers.queue.current?.title}`,
-            url: `${GuildPlayers.queue.current?.uri}`,
+            title: `${guildPlayer.trackRepeat ? '🔂' : guildPlayer.paused ? '⏸' : '▶️'} | ${guildPlayer.queue.current?.title}`,
+            url: `${guildPlayer.queue.current?.uri}`,
             author: {
               name: 'Currently Being Played',
-              url: `${GuildPlayers.queue.current?.uri}`
+              url: `${guildPlayer.queue.current?.uri}`
             },
             thumbnail: {
-              url: `${GuildPlayers.queue.current?.thumbnail}`
+              url: `${guildPlayer.queue.current?.thumbnail}`
             },
             color: 'YELLOW',
-            description: `\`Length:\` ${this.client.utils.getDurationString(GuildPlayers.queue.current?.duration)}\n\n\`Requested by\`: ${GuildPlayers.queue.current?.requester}`,
+            description: `\`Length:\` ${this.client.utils.getDurationString(guildPlayer.queue.current?.duration)}\n\n\`Requested by\`: ${guildPlayer.queue.current?.requester}`,
             fields: [
               {
                 name: 'Next Up',
-                value: `${GuildPlayers.queue.length == 0 ? '\`Nothing\`' : `\`${GuildPlayers.queue[0].title}\``}`
+                value: `${guildPlayer.queue.length == 0 ? '\`Nothing\`' : `\`${guildPlayer.queue[0].title}\``}`
               }
             ]
           })]
@@ -45,7 +45,7 @@ export default class NowPlayingCommand extends Command {
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
             color: 'RED',
-            description: '⛔ | An error occured'
+            description: '⛔ | An error occured.'
           })]
         })
         return
@@ -53,9 +53,7 @@ export default class NowPlayingCommand extends Command {
     },
       {
         aliases: ['nowplaying', 'np'],
-        description: 'Get the current playing song.',
-        cooldown: 3000,
-        argsRequired: false
+        description: 'Get the current playing song.'
       })
   }
   public category = 'Music'

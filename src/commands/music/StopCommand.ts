@@ -2,16 +2,15 @@ import { Command } from 'eris'
 import { Client } from 'src/base/Client'
 
 
-export default class SkipCommand extends Command {
+export default class StopCommand extends Command {
   constructor(public client: Client) {
-    super('skip', async (msg) => {
+    super('stop', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
+        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -20,11 +19,11 @@ export default class SkipCommand extends Command {
 
         if (!this.client.utils.passedUserRequirements(msg, guildPlayer)) return
 
-        guildPlayer.stop()
+        guildPlayer.destroy()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '👌 | Skipped current track.'
+            description: '☠️ | Ended the music player!'
           })]
         })
         return
@@ -33,7 +32,7 @@ export default class SkipCommand extends Command {
         this.client.logger.error(e.message)
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            color: 'YELLOW',
+            color: 'RED',
             description: '⛔ | An error occured.'
           })]
         })
@@ -41,8 +40,7 @@ export default class SkipCommand extends Command {
       }
     },
       {
-        aliases: ['s'],
-        description: 'Skip current playing track.'
+        description: 'Stop playing music.'
       })
   }
   public category = 'Music'

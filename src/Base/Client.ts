@@ -1,9 +1,7 @@
 import 'dotenv/config'
 import { CommandClient } from 'eris'
-import readdirRecursive from '../utils/ReaddirRecursive';
 import { EventHandler } from 'handlers/EventHandler'
 import { CommandHandler } from 'handlers/CommandHandler'
-import { join } from 'path'
 import { Manager } from 'erela.js'
 import { Spotify } from 'better-erela.js-spotify'
 import Jsoning from 'jsoning'
@@ -25,6 +23,10 @@ export class Client extends CommandClient {
         ignoreBots: true,
         ignoreSelf: true,
         defaultHelpCommand: false,
+        defaultCommandOptions: {
+          cooldown: 3000,
+          guildOnly: true
+        }
       })
 
     new EventHandler(this).loadEvents()

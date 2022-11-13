@@ -4,7 +4,7 @@ import chalk from "chalk";
 const { red, green, yellowBright } = chalk;
 
 // pages dir is handled by Next.js
-const paths = await globby(["./src/**/**/*.ts", "!./src/pages/**"]);
+const paths = await globby(["./src/**/**/*.ts", "!./src/pages/**"])
 
 const data = buildSync({
   minify: true,
@@ -14,13 +14,13 @@ const data = buildSync({
   entryPoints: paths,
   target: "node16",
   format: "cjs",
-  logLevel: "info",
-});
+  logLevel: "info"
+})
 
 if (data.warnings.length > 0) {
-  console.info(yellowBright("Chiyo built with errors"));
+  console.info(yellowBright("Chiyo built with errors"))
 } else if (data.errors.length > 0) {
-  console.error(red("Encountered errors when building"));
+  console.error(red("Encountered errors when building"))
 } else {
-  console.info(green("\n\n 🎉🎉 Built Chiyo without errors! 🎉🎉\n\n"));
+  console.info(green("Built without errors!"))
 }

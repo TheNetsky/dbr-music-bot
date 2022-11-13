@@ -2,9 +2,9 @@ import { Command } from 'eris'
 import { Client } from 'src/base/Client'
 
 
-export default class PlayCommand extends Command {
+export default class PlaySkipCommand extends Command {
   constructor(public client: Client) {
-    super('play', async (msg, args) => {
+    super('playskip', async (msg, args) => {
 
       try {
         const node = this.client.erela.leastUsedNodes.first()
@@ -34,7 +34,6 @@ export default class PlayCommand extends Command {
         if (musicTrack.loadType === 'NO_MATCHES') {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
               description: '⛔ | No result found.'
             })]
           })
@@ -44,7 +43,6 @@ export default class PlayCommand extends Command {
         if (musicTrack.loadType === 'LOAD_FAILED') {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
               description: '⛔ | An error occured when loading the track.'
             })]
           })
@@ -55,19 +53,19 @@ export default class PlayCommand extends Command {
         if (!msg.member?.voiceState.channelID) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
               description: '⛔ | you must join voice channel to do this.'
             })]
           })
           return
         }
 
+        // If no play exists
         if (!guildPlayer) {
           const player = await this.client.erela.create({
             guild: msg.guildID as string,
-            voiceChannel: msg.member?.voiceState.channelID as string,
+            voiceChannel: msg.member.voiceState.channelID as string,
             textChannel: msg.channel.id,
-            selfDeafen: true,
+            selfDeafen: true
           })
 
           player.connect()
@@ -79,27 +77,26 @@ export default class PlayCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
+                description: `☑ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
-
           } else {
             player.queue.add(musicTrack.tracks[0])
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+                description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [${msg.author}]`
               })]
             })
           }
-          return player.play()
+          player.play()
+          return
         }
 
+        // If player already exists
         if (msg.member.voiceState.channelID !== guildPlayer.voiceChannel) {
-
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
               description: '⛔ | you must join voice channel same as me to do this.'
             })]
           })
@@ -107,25 +104,20 @@ export default class PlayCommand extends Command {
         }
 
         if (musicTrack.loadType === 'PLAYLIST_LOADED') {
-          for (const track of musicTrack.tracks) {
-            guildPlayer.queue.add(track)
-          }
-
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
-              description: `☑ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
+              description: '⛔ | you can only playskip with a single track.'
             })]
           })
           return
         }
 
-        guildPlayer.queue.add(musicTrack.tracks[0])
+        guildPlayer.queue.unshift(musicTrack.tracks[0])
+        guildPlayer.stop()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            color: 'YELLOW',
-            description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+            description: `☑ | Playskipped track \`${guildPlayer.queue.current?.title}\``
           })]
         })
         return
@@ -135,15 +127,15 @@ export default class PlayCommand extends Command {
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
             color: 'RED',
-            description: '⛔ | An error occured.'
+            description: '⛔ | An error occured'
           })]
         })
         return
       }
     },
       {
-        aliases: ['p'],
-        description: 'Play some music.'
+        aliases: ['ps'],
+        description: 'Skip and play current song.'
       })
   }
   public category = 'Music'

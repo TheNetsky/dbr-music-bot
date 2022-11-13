@@ -12,10 +12,10 @@ export default class queueEndEvent extends Event {
   async execute(client: Client, player: Player) {
     if (!client.db.get(`${player.guild}_leaveOnQueueEnd`)) return
 
-    const QueueChannel = client.getChannel(player.textChannel ?? '') as TextChannel
-    if (!QueueChannel) return
+    const queueChannel = client.getChannel(player.textChannel ?? '') as TextChannel
+    if (!queueChannel) return
 
-    QueueChannel.createMessage({
+    queueChannel.createMessage({
       embeds: [client.utils.CreateEmbed({
         description: '⏹ | queue has ended.'
       })]
