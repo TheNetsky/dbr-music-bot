@@ -1,6 +1,6 @@
 import { Command } from 'eris'
-import { Client } from 'src/base/Client'
-import { Pagination } from '../../utils/Pagination'
+import { Client } from 'structures/Client'
+import { Pagination } from 'utils/Pagination'
 
 
 export default class QueueCommand extends Command {

@@ -1,5 +1,5 @@
 import { Command } from 'eris'
-import { Client } from 'src/base/Client'
+import { Client } from 'structures/Client'
 
 
 export default class PauseCommand extends Command {

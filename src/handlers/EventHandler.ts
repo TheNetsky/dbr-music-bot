@@ -1,7 +1,7 @@
 import glob from 'glob'
-import { Client } from '../base/Client'
-import { Event } from '../structures/Event'
-import { resolveFile, validateFile } from '../utils/HandlersUtil'
+import { Client } from 'structures/Client'
+import { Event } from 'structures/Event'
+import { resolveFile, validateFile } from 'utils/HandlersUtil'
 
 export class EventHandler {
   client: Client

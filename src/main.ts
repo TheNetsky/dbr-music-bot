@@ -1,5 +1,5 @@
 import http from 'http'
-import { logger } from './utils/Logger'
+import { logger } from 'utils/Logger'
 import 'dotenv/config'
 
 const Replit = (process.env.REPLIT_DB_URL !== undefined)

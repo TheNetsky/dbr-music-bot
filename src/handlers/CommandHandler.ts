@@ -1,6 +1,6 @@
 import glob from 'glob'
-import { resolveFile } from '../utils/HandlersUtil'
-import { Client } from '../base/Client'
+import { resolveFile } from 'utils/HandlersUtil'
+import { Client } from 'structures/Client'
 
 
 export class CommandHandler {

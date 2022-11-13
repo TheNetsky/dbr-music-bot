@@ -1,4 +1,4 @@
-import { Client } from '../base/Client'
+import { Client } from './Client'
 
 
 export abstract class Event {

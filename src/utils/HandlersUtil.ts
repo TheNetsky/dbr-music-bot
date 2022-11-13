@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-import { Client } from '../base/Client'
+import { Client } from 'structures/Client'
 import { Event } from '../structures/Event'
 
 type Structures = Event;

@@ -1,5 +1,5 @@
 import * as Eris from 'eris'
-import { Client } from 'src/base/Client'
+import { Client } from 'structures/Client'
 import { version } from 'package.json'
 import ms from 'ms'
 import { stripIndent } from 'common-tags'

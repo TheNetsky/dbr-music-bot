@@ -1,4 +1,4 @@
-import { Client } from '../../base/Client'
+import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
 import { Node } from 'erela.js'
 

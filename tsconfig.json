@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "target": "esnext",
@@ -22,7 +21,12 @@
     "resolveJsonModule": true,
     "noEmit": false,
     "useUnknownInCatchVariables": false,
-    "lib": ["ESNext", "dom", "dom.iterable", "ES2020.BigInt"],
+    "lib": [
+      "ESNext",
+      "dom",
+      "dom.iterable",
+      "ES2020.BigInt"
+    ],
     "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
@@ -37,14 +41,24 @@
     "useDefineForClassFields": true,
     "jsx": "preserve",
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./typings"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ],
     "baseUrl": ".",
     "paths": {
-      "structures/*": ["./src/structures/*"],
-      "handlers/*": ["./src/handlers/*"],
-      "types/*": ["./src/interfaces/*"],
-      "Utility/*": ["src/Util/*"],
-      "@commands/*": ["./src/Commands/*"],
+      "structures/*": [
+        "./src/structures/*"
+      ],
+      "handlers/*": [
+        "src/handlers/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "@commands/*": [
+        "./src/commands/*"
+      ],
     },
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo"
@@ -59,7 +73,7 @@
     "**/*.ts",
     "**/*.tsx",
     "./*.js"
-, "src/listeners/cClient/raw.WSts"  ],
+  ],
   "ts-node": {
     "swc": true
   }

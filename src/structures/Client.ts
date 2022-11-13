@@ -6,8 +6,8 @@ import { Manager } from 'erela.js'
 import { Spotify } from 'better-erela.js-spotify'
 import Jsoning from 'jsoning'
 import config from '../../config.json'
-import { Utils } from '../utils/Utils'
-import { logger } from '../utils/Logger'
+import { Utils } from 'utils/Utils'
+import { logger } from 'utils/Logger'
 
 
 export class Client extends CommandClient {
