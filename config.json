@@ -9,6 +9,5 @@
       "secure": false
     }
   ],
-  "prefix": "!",
-  "updateSlash": false
+  "prefix": "!"
 }
