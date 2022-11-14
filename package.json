@@ -1,7 +1,7 @@
 {
-  "name": "dbr-music",
+  "name": "dbr-music-bot",
   "version": "1.0.0",
-  "description": "A dank music discord !",
+  "description": "A music discord for the bois!",
   "main": "src/main",
   "author": "Netsky",
   "license": "GPL-3.0",
