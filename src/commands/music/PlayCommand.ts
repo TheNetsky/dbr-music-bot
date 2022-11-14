@@ -79,7 +79,7 @@ export default class PlayCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
+                description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
 
@@ -88,7 +88,7 @@ export default class PlayCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+                description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
               })]
             })
           }
@@ -114,7 +114,7 @@ export default class PlayCommand extends Command {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
               color: 'YELLOW',
-              description: `☑ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
+              description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
             })]
           })
           return
@@ -125,7 +125,7 @@ export default class PlayCommand extends Command {
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
             color: 'YELLOW',
-            description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+            description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
           })]
         })
         return

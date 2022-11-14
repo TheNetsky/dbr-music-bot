@@ -23,7 +23,7 @@ export default class trackStartEvent extends Event {
           url: `${track.uri}`,
         },
         //@ts-ignore
-        description: `\`Length:\` ${track.isStream ? '\`Live 🔴\`' : this.client.utils.getDurationString(track.duration)}\n\n\`Requested by\`: <@${track.requester?.id}>`,
+        description: `\`Status:\` ${player.trackRepeat ? 'Looping' : player.paused ? 'Paused' : 'Playing'}\n\n\`Length:\` ${track.isStream ? '\`Live 🔴\`' : this.client.utils.getDurationString(track.duration)}\n\n\`Requested by:\` <@${track.requester?.id}>`,
         thumbnail: {
           url: `${track.thumbnail}`
         },

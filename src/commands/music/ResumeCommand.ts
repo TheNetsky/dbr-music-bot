@@ -23,7 +23,7 @@ export default class ResumeCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '👌 | Resumed guild queue.'
+            description: '✅ | Resumed guild queue.'
           })]
         })
         return

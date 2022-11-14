@@ -7,7 +7,7 @@ export default class NowPlayingCommand extends Command {
     super('nowplaying', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
+        const guildPlayer: any = this.client.erela.players.get(msg.guildID ?? '')
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -20,17 +20,17 @@ export default class NowPlayingCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            title: `${guildPlayer.trackRepeat ? '🔂' : guildPlayer.paused ? '⏸' : '▶️'} | ${guildPlayer.queue.current?.title}`,
+            title: `${guildPlayer.queue.current?.title}`,
             url: `${guildPlayer.queue.current?.uri}`,
             author: {
-              name: 'Currently Being Played',
+              name: `Currently Being Played`,
               url: `${guildPlayer.queue.current?.uri}`
             },
             thumbnail: {
               url: `${guildPlayer.queue.current?.thumbnail}`
             },
             color: 'YELLOW',
-            description: `\`Length:\` ${this.client.utils.getDurationString(guildPlayer.queue.current?.duration)}\n\n\`Requested by\`: ${guildPlayer.queue.current?.requester}`,
+            description: `\`Status:\` ${guildPlayer.trackRepeat ? 'Looping' : guildPlayer.paused ? 'Paused' : 'Playing'}\n\n\`Length:\` ${guildPlayer.queue.current.isStream ? '\`Live 🔴\`' : this.client.utils.getDurationString(guildPlayer.queue.current.duration)}\n\n\`Requested by:\` <@${guildPlayer.queue.current?.requester.id}>`,
             fields: [
               {
                 name: 'Next Up',

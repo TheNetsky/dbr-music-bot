@@ -77,7 +77,7 @@ export default class PlaySkipCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
+                description: `✅ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
           } else {
@@ -85,7 +85,7 @@ export default class PlaySkipCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.CreateEmbed({
-                description: `☑ | Added track \`${musicTrack.tracks[0].title}\` [${msg.author}]`
+                description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [${msg.author}]`
               })]
             })
           }
@@ -117,7 +117,7 @@ export default class PlaySkipCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: `☑ | Playskipped track \`${guildPlayer.queue.current?.title}\``
+            description: `✅ | Playskipped track \`${guildPlayer.queue.current?.title}\``
           })]
         })
         return

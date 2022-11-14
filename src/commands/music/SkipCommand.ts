@@ -24,7 +24,7 @@ export default class SkipCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '👌 | Skipped current track.'
+            description: '✅ | Skipped current track.'
           })]
         })
         return

@@ -24,7 +24,7 @@ export default class PauseCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '👌 | Paused guild queue.'
+            description: '✅ | Paused guild queue.'
           })]
         })
         return

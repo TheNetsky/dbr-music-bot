@@ -21,13 +21,7 @@ export default class QueueCommand extends Command {
         if (guildPlayer.queue.size < 1) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              description: `
-            Now Playing:
-            
-            \`\`\`css${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`
-            Next Track:
-            \`\`\`css${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'None.'}\`\`\`
-            `})],
+              description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``})],
           })
           return
         }

@@ -23,10 +23,11 @@ export default class LoopCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: `👌 | ${guildPlayer.queueRepeat ? 'Enabled loop 🔂' : 'Disabled loop'}`
+            description: `${guildPlayer.trackRepeat ? '🔂 | Enabled track loop' : '▶️ | Disabled tracking loop'}`
           })]
         })
         return
+
       } catch (e) {
         this.client.logger.error(e.message)
         msg.channel.createMessage({
