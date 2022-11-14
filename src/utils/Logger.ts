@@ -15,7 +15,7 @@ log4js.configure(
       },
       dateFile: {
         type: 'dateFile',
-        filename: 'logs/noteblock.log',
+        filename: 'logs/dbr.log',
         pattern: 'yyyy-MM-dd-hh',
         compress: true,
       },
