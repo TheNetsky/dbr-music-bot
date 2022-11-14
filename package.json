@@ -2,7 +2,6 @@
   "name": "dbr-music-bot",
   "version": "1.0.0",
   "description": "A music discord for the bois!",
-  "main": "src/main",
   "author": "Netsky",
   "license": "GPL-3.0",
   "private": true,
