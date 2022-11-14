@@ -19,7 +19,7 @@ export default class StatsCommand extends Eris.Command {
             Node.js: ${process.version}
             Version: ${version}
             Uptime: ${ms(this.client.uptime, { long: true })}
-            Discord.js: ${Eris.VERSION} (Eris)
+            Eris: ${Eris.VERSION}
             \`\`\`
             **Music Statistics**
             \`\`\`css

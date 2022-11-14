@@ -16,6 +16,6 @@ export default class socketClosedEvent extends Event {
       setTimeout(() => player.pause(false), 2000)
       return true
     }
-    return undefined
+    return
   }
 }
