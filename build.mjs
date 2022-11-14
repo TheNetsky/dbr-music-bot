@@ -18,7 +18,7 @@ const data = buildSync({
 })
 
 if (data.warnings.length > 0) {
-  console.info(yellowBright("Chiyo built with errors"))
+  console.info(yellowBright("Built with errors"))
 } else if (data.errors.length > 0) {
   console.error(red("Encountered errors when building"))
 } else {
