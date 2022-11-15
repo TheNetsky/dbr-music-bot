@@ -40,7 +40,8 @@ export default class LoopCommand extends Command {
       }
     },
       {
-        description: 'Loop current track.'
+        description: 'Loop current track.',
+        usage: 'loop'
       })
   }
   public category = 'Music'

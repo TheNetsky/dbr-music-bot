@@ -27,7 +27,9 @@ export default class SetDJCommand extends Command {
       }
     },
       {
-        description: 'Set the DJ role.'
+        description: 'Set the DJ role.',
+        usage: 'setdj {role}',
+        argsRequired: true
       })
   }
   public category = 'Config'

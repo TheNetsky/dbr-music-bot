@@ -162,7 +162,9 @@ export default class PlaySkipCommand extends Command {
     },
       {
         aliases: ['ps'],
-        description: 'Skip and play current track.'
+        description: 'Skip and play current track.',
+        usage: 'playskip {YouTube URL, Spotify URL, search query or queue position}',
+        argsRequired:  true
       })
   }
   public category = 'Music'

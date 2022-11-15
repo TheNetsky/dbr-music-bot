@@ -21,7 +21,8 @@ export default class QueueCommand extends Command {
         if (guildPlayer.queue.size < 1) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
-              description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``})],
+              description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``
+            })],
           })
           return
         }
@@ -63,8 +64,8 @@ export default class QueueCommand extends Command {
       {
         aliases: ['q'],
         description: 'Get current track queue.',
-        cooldown: 10000,
-        argsRequired: false
+        usage: 'queue',
+        cooldown: 10000
       })
   }
   public category = 'Music'

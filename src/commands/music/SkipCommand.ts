@@ -42,7 +42,8 @@ export default class SkipCommand extends Command {
     },
       {
         aliases: ['s'],
-        description: 'Skip current playing track.'
+        description: 'Skip current playing track.',
+        usage: 'skip'
       })
   }
   public category = 'Music'

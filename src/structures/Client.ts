@@ -22,7 +22,7 @@ export class Client extends CommandClient {
         owner: config.owner,
         ignoreBots: true,
         ignoreSelf: true,
-        defaultHelpCommand: false,
+        defaultHelpCommand: true,
         defaultCommandOptions: {
           cooldown: 3000,
           guildOnly: true

@@ -88,8 +88,9 @@ export default class EqualizerCommand extends Command {
       {
         aliases: ['eq'],
         description: 'Change the player\'s equalizer.',
+        usage: 'equalizer {type} {intensity}',
         cooldown: 10000,
-        argsRequired: false
+        argsRequired: true,
       })
   }
   public category = 'Music'

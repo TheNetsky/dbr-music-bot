@@ -54,7 +54,8 @@ export default class PreviousCommand extends Command {
     },
       {
         aliases: ['prev'],
-        description: 'Play the previous track.'
+        description: 'Play the previous track.',
+        usage: 'previous'
       })
   }
   public category = 'Music'

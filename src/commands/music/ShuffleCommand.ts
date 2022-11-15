@@ -40,7 +40,8 @@ export default class ShuffleCommand extends Command {
       }
     },
       {
-        description: 'Shuffle the queue.'
+        description: 'Shuffle the queue.',
+        usage: 'shuffle'
       })
   }
   public category = 'Music'

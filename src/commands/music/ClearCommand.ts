@@ -42,7 +42,8 @@ export default class ClearCommand extends Command {
     },
       {
         aliases: ['clean', 'empty', 'nuke'],
-        description: 'Clear the queue.'
+        description: 'Clear the queue.',
+        usage: 'clear'
       })
   }
   public category = 'Music'

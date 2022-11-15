@@ -28,6 +28,14 @@ export class CommandHandler {
 
       Object.assign(erisCommand, command)
 
+      if (erisCommand.usage) {
+        erisCommand.invalidUsageMessage = {
+          embeds: [this.client.utils.CreateEmbed({
+            description: `⛔ | Invalid Usage/Arguments\nUsage: \`${erisCommand.usage}\``
+          })]
+        }
+      }
+
       if (process.env['DEBUG_MODE'] === 'true') {
         this.client.logger.log(`COMMAND: Loaded ${command.label}`)
       }

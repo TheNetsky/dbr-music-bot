@@ -41,7 +41,8 @@ export default class LoopQueue extends Command {
     },
       {
         aliases: ['loopq'],
-        description: 'Loop the entire queue.'
+        description: 'Loop the entire queue.',
+        usage: 'loop'
       })
   }
   public category = 'Music'

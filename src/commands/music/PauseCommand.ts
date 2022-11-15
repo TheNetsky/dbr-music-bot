@@ -41,7 +41,8 @@ export default class PauseCommand extends Command {
       }
     },
       {
-        description: 'Pause current track.'
+        description: 'Pause current track.',
+        usage: 'pause'
       })
   }
   public category = 'Music'

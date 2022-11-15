@@ -54,7 +54,8 @@ export default class NowPlayingCommand extends Command {
     },
       {
         aliases: ['nowplaying', 'np'],
-        description: 'Get the current playing track.'
+        description: 'Get the current playing track.',
+        usage: 'nowplaying'
       })
   }
   public category = 'Music'

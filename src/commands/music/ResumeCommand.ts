@@ -41,7 +41,8 @@ export default class ResumeCommand extends Command {
     },
       {
         aliases: ['r'],
-        description: 'Resume the current track.'
+        description: 'Resume the current track.',
+        usage: 'resume'
       })
   }
   public category = 'Music'

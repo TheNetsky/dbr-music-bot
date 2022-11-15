@@ -40,7 +40,8 @@ export default class StopCommand extends Command {
       }
     },
       {
-        description: 'Stop playing music.'
+        description: 'Stop playing music.',
+        usage: 'stop'
       })
   }
   public category = 'Music'

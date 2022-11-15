@@ -147,7 +147,9 @@ export default class PlayCommand extends Command {
     },
       {
         aliases: ['p'],
-        description: 'Play some music.'
+        description: 'Play some music.',
+        usage: 'play {YouTube URL, Spotify URL or search query}',
+        argsRequired: true
       })
   }
   public category = 'Music'

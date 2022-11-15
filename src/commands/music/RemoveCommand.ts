@@ -64,7 +64,9 @@ export default class RemoveCommand extends Command {
       }
     },
       {
-        description: 'Remove track from the queue.'
+        description: 'Remove track from the queue.',
+        usage: 'remove {queue position}',
+        argsRequired: true
       })
   }
   public category = 'Music'

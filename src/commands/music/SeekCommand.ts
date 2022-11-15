@@ -78,7 +78,9 @@ export default class SeekCommand extends Command {
       }
     },
       {
-        description: 'Seeks to a specified time in the track.'
+        description: 'Seeks to a specified time in the track.',
+        usage: 'seek {seconds}',
+        argsRequired: true
       })
   }
   public category = 'Music'
