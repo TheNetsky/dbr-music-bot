@@ -15,6 +15,7 @@ export default class messageCreateEvent extends Event {
     const command: Command = message.command
     const requirements: any = command.requirements
 
+    // Requirement userIDs
     if (requirements.userIDs?.length) {
       if (!requirements.userIDs.includes(message.author.id)) {
         const msg = await message.channel.createMessage('You don\'t have permissions to use this command.')
@@ -23,8 +24,6 @@ export default class messageCreateEvent extends Event {
         }, 5000)
       }
     }
-
-
 
   }
 }

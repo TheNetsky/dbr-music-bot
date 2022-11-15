@@ -44,8 +44,8 @@ export class Client extends CommandClient {
       new Spotify()
     ],
     send: (id, payload) => {
-      const guild = this.guilds.get(id);
-      if (guild) guild.shard.sendWS(payload.op, payload.d);
+      const guild = this.guilds.get(id)
+      if (guild) guild.shard.sendWS(payload.op, payload.d)
     }
   })
 

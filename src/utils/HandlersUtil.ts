@@ -2,7 +2,7 @@ import { resolve } from 'node:path'
 import { Client } from 'structures/Client'
 import { Event } from '../structures/Event'
 
-type Structures = Event;
+type Structures = Event
 
 export async function resolveFile<T>(file: string, client: Client): Promise<T | null> {
   const resolvedPath = resolve(file)

@@ -5,6 +5,7 @@ import { Player } from 'erela.js'
 import { Message } from 'eris'
 dayjs.extend(duration)
 
+
 export class Utils {
 
     // https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
@@ -28,14 +29,16 @@ export class Utils {
     **❔ |** *${prompt}*
     **🔘 |** *You have \`30\` seconds to decide*
     **🔘 |** *Type \`cancel\` to cancel*
-    `;
+    `
     }
 
     chunk(...args) {
-        const [arr, len] = args;
-        const rest: Array<any> = [];
-        for (let i = 0; i < arr.length; i += len) { rest.push(arr.slice(i, i + len)); }
-        return rest;
+        const [arr, len] = args
+        const rest: Array<any> = []
+        for (let i = 0; i < arr.length; i += len) {
+            rest.push(arr.slice(i, i + len))
+        }
+        return rest
     }
 
     getDurationString(vidDuration) {

@@ -42,7 +42,7 @@ export default class StatsCommand extends Eris.Command {
       {
         description: 'Gets the bot\'s statistics.',
         requirements: {
-          userIDs: ['140415255741333504']
+          userIDs: [client.config.owner]
         }
       })
   }

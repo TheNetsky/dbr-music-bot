@@ -17,5 +17,5 @@ export abstract class Event {
   /**
    * @param {Client} client client
    */
-  abstract execute(client: Client, ...args: any[]): Promise<any>;
+  abstract execute(client: Client, ...args: any[]): Promise<any>
 }

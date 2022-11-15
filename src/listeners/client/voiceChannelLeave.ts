@@ -5,7 +5,7 @@ import { Member, TextVoiceChannel } from 'eris'
 
 export default class voiceChannelLeaveEvent extends Event {
   constructor(client: Client) {
-    super(client, 'voiceChannelLeave')
+    super(client, 'voiceChannelLeave', false)
   }
 
   async execute(client: Client, member: Member, channel: TextVoiceChannel) {

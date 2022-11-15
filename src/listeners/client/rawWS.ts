@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { VoicePacket } from 'erela.js';
+import { VoicePacket } from 'erela.js'
 
 
 export default class rawWSEvent extends Event {
