@@ -2,9 +2,9 @@ import { Command } from 'eris'
 import { Client } from 'structures/Client'
 
 
-export default class PauseCommand extends Command {
+export default class PreviousCommand extends Command {
   constructor(public client: Client) {
-    super('pause', async (msg) => {
+    super('previous', async (msg) => {
 
       try {
         const guildPlayer = this.client.erela.players.get(msg.guildID as string)
@@ -20,11 +20,23 @@ export default class PauseCommand extends Command {
 
         if (!this.client.utils.passedUserRequirements(msg, guildPlayer)) return
 
-        guildPlayer.pause(true)
+        if (!guildPlayer.queue.previous) {
+          msg.channel.createMessage({
+            embeds: [this.client.utils.CreateEmbed({
+              color: 'YELLOW',
+              description: '⛔ | The is no previous track.'
+            })]
+          })
+          return
+        }
+
+        guildPlayer.queue.add(guildPlayer.queue.previous)
+        guildPlayer.queue.unshift(guildPlayer.queue.previous)
+        guildPlayer.stop()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '✅ | Paused guild queue.'
+            description: '⏮ | Playing previous track.'
           })]
         })
         return
@@ -33,7 +45,7 @@ export default class PauseCommand extends Command {
         this.client.logger.error(e.message)
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            color: 'RED',
+            color: 'YELLOW',
             description: '⛔ | An error occured.'
           })]
         })
@@ -41,7 +53,8 @@ export default class PauseCommand extends Command {
       }
     },
       {
-        description: 'Pause current track.'
+        aliases: ['prev'],
+        description: 'Play the previous track.'
       })
   }
   public category = 'Music'

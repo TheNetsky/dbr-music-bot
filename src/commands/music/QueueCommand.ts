@@ -36,7 +36,7 @@ export default class QueueCommand extends Command {
           const embed = this.client.utils.CreateEmbed({
             description: chunk.join('\n'),
             author: {
-              name: `${guild?.name} queue list`,
+              name: `${guild?.name}'s track queue`,
               icon_url: guild?.iconURL
             },
             footer: {
@@ -62,7 +62,7 @@ export default class QueueCommand extends Command {
     },
       {
         aliases: ['q'],
-        description: 'Get current song queue.',
+        description: 'Get current track queue.',
         cooldown: 10000,
         argsRequired: false
       })

@@ -9,7 +9,6 @@ export default class EqualizerCommand extends Command {
       try {
 
         const typeArg = args[0]?.toUpperCase()
-
         if (!typeArg) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({

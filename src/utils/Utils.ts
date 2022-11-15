@@ -1,4 +1,3 @@
-import { stripIndents } from 'common-tags'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import { Player } from 'erela.js'
@@ -9,7 +8,7 @@ dayjs.extend(duration)
 export class Utils {
 
     // https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
-    CreateEmbed(embed): any {
+    CreateEmbed(embed: any): any {
         let color: number
         switch (String(embed?.color).toUpperCase()) {
             case 'YELLOW':
@@ -24,15 +23,7 @@ export class Utils {
         return Object.assign(embed, { color: color })
     }
 
-    CreatePrompt(prompt) {
-        return stripIndents`
-    **❔ |** *${prompt}*
-    **🔘 |** *You have \`30\` seconds to decide*
-    **🔘 |** *Type \`cancel\` to cancel*
-    `
-    }
-
-    chunk(...args) {
+    chunk(...args: any[]) {
         const [arr, len] = args
         const rest: Array<any> = []
         for (let i = 0; i < arr.length; i += len) {
@@ -41,21 +32,36 @@ export class Utils {
         return rest
     }
 
-    getDurationString(vidDuration) {
-        return dayjs.duration(vidDuration)
+    getDurationString(duration: number) {
+        return dayjs.duration(duration)
             .format('HH:mm:ss')
     }
 
-    passedUserRequirements(msg: Message, guildPlayer: Player): boolean {
-        let passed = true
+    createSeekbar(currentValue: number, maxValue: number, size: number, slider: string = '🔘', line: string = '▬') {
+        if (currentValue > maxValue) {
+            const bar = line.repeat(size + 2)
+            const calculated = (currentValue / maxValue) * 100
+            return { bar, calculated }
+        } else {
+            const percentage = currentValue / maxValue
+            const progress = Math.round((size * percentage))
+            const emptyProgress = size - progress;
+            const progressBar = line.repeat(progress).replace(/.$/, slider)
+            const emptyprogressBar= line.repeat(emptyProgress)
+            const bar = progressBar + emptyprogressBar
+            const calculated = (currentValue / maxValue) * 100
+            return { bar, calculated }
+        }
+    }
 
+    passedUserRequirements(msg: Message, guildPlayer: Player): boolean {
         if (!msg.member?.voiceState.channelID) {
             msg.channel.createMessage({
                 embeds: [this.CreateEmbed({
                     description: '⛔ | you must join voice channel to do this.'
                 })]
             })
-            passed = false
+            return false
         }
 
         if (msg.member?.voiceState.channelID !== guildPlayer.voiceChannel) {
@@ -64,9 +70,9 @@ export class Utils {
                     description: '⛔ | you must join voice channel same as me to do this.'
                 })]
             })
-            passed = false
+            return false
         }
-        return passed
+        return true
     }
 
 }

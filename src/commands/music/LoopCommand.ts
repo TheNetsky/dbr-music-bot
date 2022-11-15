@@ -7,7 +7,7 @@ export default class LoopCommand extends Command {
     super('loop', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
+        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -23,7 +23,7 @@ export default class LoopCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: `${guildPlayer.trackRepeat ? '🔂 | Enabled track loop' : '▶️ | Disabled tracking loop'}`
+            description: `${guildPlayer.trackRepeat ? '🔂 | Enabled track loop' : '▶️ | Disabled track loop'}`
           })]
         })
         return

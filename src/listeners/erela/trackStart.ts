@@ -10,7 +10,7 @@ export default class trackStartEvent extends Event {
   }
 
   async execute(client: Client, player: Player, track: Track) {
-    const queueChannel = client.getChannel(player.textChannel ?? '') as TextChannel
+    const queueChannel = client.getChannel(player.textChannel as string) as TextChannel
     if (!queueChannel) return
 
 
@@ -23,7 +23,7 @@ export default class trackStartEvent extends Event {
           url: `${track.uri}`,
         },
         //@ts-ignore
-        description: `\`Status:\` ${player.trackRepeat ? 'Looping' : player.paused ? 'Paused' : 'Playing'}\n\n\`Length:\` ${track.isStream ? '\`Live 🔴\`' : this.client.utils.getDurationString(track.duration)}\n\n\`Requested by:\` <@${track.requester?.id}>`,
+        description: `**Status:** \`${player.trackRepeat ? 'Looping 🔂' : player.paused ? 'Paused ⏸' : 'Playing ▶️'}\`\n\n**Length:** \`${track.isStream ? 'Live 🔴' : this.client.utils.getDurationString(track.duration)}\`\n\n**Requested by:** <@${track.requester?.id}>`,
         thumbnail: {
           url: `${track.thumbnail}`
         },

@@ -7,7 +7,7 @@ export default class NowPlayingCommand extends Command {
     super('nowplaying', async (msg) => {
 
       try {
-        const guildPlayer: any = this.client.erela.players.get(msg.guildID ?? '')
+        const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -30,11 +30,12 @@ export default class NowPlayingCommand extends Command {
               url: `${guildPlayer.queue.current?.thumbnail}`
             },
             color: 'YELLOW',
-            description: `\`Status:\` ${guildPlayer.trackRepeat ? 'Looping' : guildPlayer.paused ? 'Paused' : 'Playing'}\n\n\`Length:\` ${guildPlayer.queue.current.isStream ? '\`Live 🔴\`' : this.client.utils.getDurationString(guildPlayer.queue.current.duration)}\n\n\`Requested by:\` <@${guildPlayer.queue.current?.requester.id}>`,
+            description: `**Status:** \`${guildPlayer.trackRepeat ? 'Looping 🔂' : guildPlayer.paused ? 'Paused ⏸' : 'Playing ▶️'}\`\n\n**Length:** \`${guildPlayer.queue.current.isStream ? 'Live 🔴' : this.client.utils.getDurationString(guildPlayer.queue.current.duration)}\`\n\n**Requested by:** <@${guildPlayer.queue.current?.requester.id}>`,
             fields: [
               {
                 name: 'Next Up',
-                value: `${guildPlayer.queue.length == 0 ? '\`Nothing\`' : `\`${guildPlayer.queue[0].title}\``}`
+                value: `${guildPlayer.queue.length == 0 ? '\`Nothing\`' : `\`${guildPlayer.queue[0].title}\``}`,
+                inline: false
               }
             ]
           })]
@@ -53,7 +54,7 @@ export default class NowPlayingCommand extends Command {
     },
       {
         aliases: ['nowplaying', 'np'],
-        description: 'Get the current playing song.'
+        description: 'Get the current playing track.'
       })
   }
   public category = 'Music'

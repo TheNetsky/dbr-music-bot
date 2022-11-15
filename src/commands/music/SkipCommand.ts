@@ -7,7 +7,7 @@ export default class SkipCommand extends Command {
     super('skip', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID ?? '')
+        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -24,7 +24,7 @@ export default class SkipCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: '✅ | Skipped current track.'
+            description: '⏭ | Skipped current track.'
           })]
         })
         return

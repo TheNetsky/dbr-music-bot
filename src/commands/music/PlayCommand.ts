@@ -18,9 +18,8 @@ export default class PlayCommand extends Command {
           return
         }
 
-        const query = args[0]
-
-        if (!query) {
+        const queryArg = args[0]
+        if (!queryArg) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
               color: 'YELLOW',
@@ -30,7 +29,7 @@ export default class PlayCommand extends Command {
           return
         }
 
-        const musicTrack = await this.client.erela.search(query, msg.author)
+        const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -51,7 +50,6 @@ export default class PlayCommand extends Command {
           return
         }
 
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!msg.member?.voiceState.channelID) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -62,6 +60,8 @@ export default class PlayCommand extends Command {
           return
         }
 
+        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
+        // If no guildPlayer exists, create one
         if (!guildPlayer) {
           const player = await this.client.erela.create({
             guild: msg.guildID as string,
@@ -72,6 +72,7 @@ export default class PlayCommand extends Command {
 
           player.connect()
 
+          // Load playlist
           if (musicTrack.loadType === 'PLAYLIST_LOADED') {
             for (const track of musicTrack.tracks) {
               player.queue.add(track)
@@ -84,6 +85,7 @@ export default class PlayCommand extends Command {
             })
 
           } else {
+            // Load single track
             player.queue.add(musicTrack.tracks[0])
 
             msg.channel.createMessage({
@@ -95,8 +97,8 @@ export default class PlayCommand extends Command {
           return player.play()
         }
 
+        // If player already exists
         if (msg.member.voiceState.channelID !== guildPlayer.voiceChannel) {
-
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
               color: 'YELLOW',
@@ -106,6 +108,7 @@ export default class PlayCommand extends Command {
           return
         }
 
+        // Load playlist
         if (musicTrack.loadType === 'PLAYLIST_LOADED') {
           for (const track of musicTrack.tracks) {
             guildPlayer.queue.add(track)
@@ -120,6 +123,7 @@ export default class PlayCommand extends Command {
           return
         }
 
+        // Load single track
         guildPlayer.queue.add(musicTrack.tracks[0])
 
         msg.channel.createMessage({

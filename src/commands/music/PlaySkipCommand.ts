@@ -18,9 +18,9 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
-        const query = args[0]
+        const queryArg = args[0]
 
-        if (!query) {
+        if (!queryArg) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
               color: 'YELLOW',
@@ -30,7 +30,7 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
-        const musicTrack = await this.client.erela.search(query, msg.author)
+        const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -49,7 +49,6 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!msg.member?.voiceState.channelID) {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -60,6 +59,7 @@ export default class PlaySkipCommand extends Command {
         }
 
         // If no play exists
+        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           const player = await this.client.erela.create({
             guild: msg.guildID as string,
@@ -70,6 +70,7 @@ export default class PlaySkipCommand extends Command {
 
           player.connect()
 
+          // Load playlist
           if (musicTrack.loadType === 'PLAYLIST_LOADED') {
             for (const track of musicTrack.tracks) {
               player.queue.add(track)
@@ -80,7 +81,9 @@ export default class PlaySkipCommand extends Command {
                 description: `✅ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
+
           } else {
+            // Load single track
             player.queue.add(musicTrack.tracks[0])
 
             msg.channel.createMessage({
@@ -103,6 +106,7 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
+        // If playlist
         if (musicTrack.loadType === 'PLAYLIST_LOADED') {
           msg.channel.createMessage({
             embeds: [this.client.utils.CreateEmbed({
@@ -112,12 +116,35 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
+        // If query is a number
+        if (!isNaN(Number(queryArg))) {
+          const trackNumber = Number(queryArg)
+
+          if (trackNumber > guildPlayer.queue.size || trackNumber < 1) {
+            msg.channel.createMessage({
+              embeds: [this.client.utils.CreateEmbed({
+                description: '⛔ | There\'s no track with this queue position.\nUse the \`queue\` command to see the current queue.'
+              })]
+            })
+            return
+          }
+
+          guildPlayer.stop(trackNumber)
+          msg.channel.createMessage({
+            embeds: [this.client.utils.CreateEmbed({
+              description: `⏭ | Playskipped track \`${guildPlayer.queue.current?.title}\``
+            })]
+          })
+          return
+        }
+
+        // Play single track
         guildPlayer.queue.unshift(musicTrack.tracks[0])
         guildPlayer.stop()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.CreateEmbed({
-            description: `✅ | Playskipped track \`${guildPlayer.queue.current?.title}\``
+            description: `⏭ | Playskipped track \`${guildPlayer.queue.current?.title}\``
           })]
         })
         return
@@ -135,7 +162,7 @@ export default class PlaySkipCommand extends Command {
     },
       {
         aliases: ['ps'],
-        description: 'Skip and play current song.'
+        description: 'Skip and play current track.'
       })
   }
   public category = 'Music'
