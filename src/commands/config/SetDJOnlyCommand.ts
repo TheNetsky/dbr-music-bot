@@ -40,8 +40,7 @@ export default class SetDJOnlyCommand extends Command {
     },
       {
         description: 'Set music commands to DJ role only.',
-        usage: 'setdjonly',
-        argsRequired: false
+        usage: 'setdjonly'
       })
   }
   public category = 'Config'

@@ -33,6 +33,17 @@ export default async (message: Message): Promise<boolean> => {
         if (hasPerms.length > 0) return true
     }
 
+    // Restrict config commands to users with "manageMessages" permission
+    if (command.category.toUpperCase() == 'CONFIG') {
+        if (!message.member?.permissions.has('manageMessages')) {
+            const msg = await message.channel.createMessage('You need to have the \`Manage Messages\` permission to change the configuration.')
+            setTimeout(() => {
+                msg.delete()
+            }, 5000)
+            return false
+        }
+    }
+
     if (!guildData) return true // If no guildData, return true since it hasn't been set up yet
 
     if (command.category.toUpperCase() == 'MUSIC')

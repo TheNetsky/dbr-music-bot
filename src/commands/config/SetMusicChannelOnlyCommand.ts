@@ -40,8 +40,7 @@ export default class SetMusicChannelOnly extends Command {
     },
       {
         description: 'Set music commands to the music channel only.',
-        usage: 'setmusicchannelonly',
-        argsRequired: false
+        usage: 'setmusicchannelonly'
       })
   }
   public category = 'Config'
