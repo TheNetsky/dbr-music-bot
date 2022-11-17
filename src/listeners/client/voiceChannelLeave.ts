@@ -21,7 +21,6 @@ export default class voiceChannelLeaveEvent extends Event {
       }
 
       guildPlayer.destroy()
-      client.logger.info('ALL USERS LEFT THE VOICE CHANNEL, PLAYER DESTOYED!')
     }
 
   }

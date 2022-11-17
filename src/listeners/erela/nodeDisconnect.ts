@@ -9,6 +9,6 @@ export default class nodeDisconnectEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.warn(`NODE [${node.options.identifier}] DISCONNECTED`)
+    client.logger.warn(`${node.options.identifier}`, 'DISCONNECTED')
   }
 }

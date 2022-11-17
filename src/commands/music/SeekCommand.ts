@@ -9,20 +9,11 @@ export default class SeekCommand extends Command {
       try {
 
         const timeArg = args[0]
-        if (!timeArg) {
-          msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
-              description: '⛔ | No arguments provided.'
-            })]
-          })
-          return
-        }
 
         const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -33,7 +24,7 @@ export default class SeekCommand extends Command {
 
         if (!guildPlayer.queue.current?.isSeekable) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | Unable to seek through this track.'
             })]
           })
@@ -44,7 +35,7 @@ export default class SeekCommand extends Command {
 
         if (isNaN(timeMS) || timeMS > guildPlayer.queue.current?.duration) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | You seek time is out of range of the track\' duration.'
             })]
           })
@@ -54,7 +45,7 @@ export default class SeekCommand extends Command {
         guildPlayer.seek(timeMS)
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: `✅ | Time skipped.`,
             fields: [
               {
@@ -67,9 +58,9 @@ export default class SeekCommand extends Command {
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]

@@ -10,7 +10,7 @@ export default class PreviousCommand extends Command {
         const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | There no music playing in this guild.'
             })]
@@ -22,7 +22,7 @@ export default class PreviousCommand extends Command {
 
         if (!guildPlayer.queue.previous) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | The is no previous track.'
             })]
@@ -35,16 +35,16 @@ export default class PreviousCommand extends Command {
         guildPlayer.stop()
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: '⏮ | Playing previous track.'
           })]
         })
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'YELLOW',
             description: '⛔ | An error occured.'
           })]

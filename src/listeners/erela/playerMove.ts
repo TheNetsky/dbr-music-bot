@@ -10,7 +10,6 @@ export default class playerMoveEvent extends Event {
   }
 
   async execute(client: Client, player: Player, oldChannel: VoiceChannel, newChannel: VoiceChannel) {
-    client.logger.info(newChannel ? `PLAYER MOVED TO [${newChannel}]` : 'SOMEONE DISCONNECTED ME FROM VOICECHANNEL')
 
     try {
       player.setVoiceChannel(newChannel.id ?? player.voiceChannel)

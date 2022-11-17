@@ -10,7 +10,7 @@ export default class PlaySkipCommand extends Command {
         const node = this.client.erela.leastUsedNodes.first()
         if (!node || !node.connected) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | No nodes are currently connected.'
             })]
@@ -20,20 +20,10 @@ export default class PlaySkipCommand extends Command {
 
         const queryArg = args[0]
 
-        if (!queryArg) {
-          msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
-              description: '⛔ | No arguments provided.'
-            })]
-          })
-          return
-        }
-
         const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | No result found.'
             })]
           })
@@ -42,7 +32,7 @@ export default class PlaySkipCommand extends Command {
 
         if (musicTrack.loadType === 'LOAD_FAILED') {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | An error occured when loading the track.'
             })]
           })
@@ -51,7 +41,7 @@ export default class PlaySkipCommand extends Command {
 
         if (!msg.member?.voiceState.channelID) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | you must join voice channel to do this.'
             })]
           })
@@ -77,7 +67,7 @@ export default class PlaySkipCommand extends Command {
             }
 
             msg.channel.createMessage({
-              embeds: [this.client.utils.CreateEmbed({
+              embeds: [this.client.utils.createEmbed({
                 description: `✅ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
@@ -87,7 +77,7 @@ export default class PlaySkipCommand extends Command {
             player.queue.add(musicTrack.tracks[0])
 
             msg.channel.createMessage({
-              embeds: [this.client.utils.CreateEmbed({
+              embeds: [this.client.utils.createEmbed({
                 description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [${msg.author}]`
               })]
             })
@@ -99,7 +89,7 @@ export default class PlaySkipCommand extends Command {
         // If player already exists
         if (msg.member.voiceState.channelID !== guildPlayer.voiceChannel) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | you must join voice channel same as me to do this.'
             })]
           })
@@ -109,7 +99,7 @@ export default class PlaySkipCommand extends Command {
         // If playlist
         if (musicTrack.loadType === 'PLAYLIST_LOADED') {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | you can only playskip with a single track.'
             })]
           })
@@ -122,7 +112,7 @@ export default class PlaySkipCommand extends Command {
 
           if (trackNumber > guildPlayer.queue.size || trackNumber < 1) {
             msg.channel.createMessage({
-              embeds: [this.client.utils.CreateEmbed({
+              embeds: [this.client.utils.createEmbed({
                 description: '⛔ | There\'s no track with this queue position.\nUse the \`queue\` command to see the current queue.'
               })]
             })
@@ -131,7 +121,7 @@ export default class PlaySkipCommand extends Command {
 
           guildPlayer.stop(trackNumber)
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: `⏭ | Playskipped track \`${guildPlayer.queue.current?.title}\``
             })]
           })
@@ -143,16 +133,16 @@ export default class PlaySkipCommand extends Command {
         guildPlayer.stop()
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: `⏭ | Playskipped track \`${guildPlayer.queue.current?.title}\``
           })]
         })
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured'
           })]

@@ -11,7 +11,7 @@ export default class EqualizerCommand extends Command {
         const typeArg = args[0]?.toUpperCase()
         if (!typeArg) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: `⛔ | No arguments provided.\nOptions: \`RESET, \`${[Presets.map(x => `\`${x.name}\``)]}\nIntensity: \`1-3\``
             })]
@@ -22,7 +22,7 @@ export default class EqualizerCommand extends Command {
         const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -35,7 +35,7 @@ export default class EqualizerCommand extends Command {
         if (typeArg == 'RESET') {
           guildPlayer.clearEQ()
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '✅ | The equalizer has been reset.'
             })]
           })
@@ -45,7 +45,7 @@ export default class EqualizerCommand extends Command {
         const preset = Presets.find(x => x.name == typeArg.toUpperCase())
         if (!preset) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: `⛔ | Unable to find that preset.\nOptions: ${[Presets.map(x => `\`${x.name}\``)]}`
             })]
           })
@@ -55,7 +55,7 @@ export default class EqualizerCommand extends Command {
         const intensityArg = args[1]
         if (!intensityArg || isNaN(Number(intensityArg))) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: `⛔ | Missing intensity argument.\nIntensity: \`1-3\``
             })]
           })
@@ -67,7 +67,7 @@ export default class EqualizerCommand extends Command {
 
         guildPlayer.setEQ(preset.intensity[intensity])
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: `✅ | The equalizer has been set to:\nPreset: \`${preset.name}\`\nIntensity: \`${intensity}\``,
             footer: { text: 'User "reset" to reset the equalizer.' }
           })]
@@ -75,9 +75,9 @@ export default class EqualizerCommand extends Command {
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]
@@ -88,7 +88,7 @@ export default class EqualizerCommand extends Command {
       {
         aliases: ['eq'],
         description: 'Change the player\'s equalizer.',
-        usage: 'equalizer {type} {intensity}',
+        usage: `equalizer {type} (RESET, ${[Presets.map(x => `${x.name}`)]}) {intensity} (1-3)`,
         cooldown: 10000,
         argsRequired: true,
       })

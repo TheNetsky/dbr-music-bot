@@ -10,7 +10,7 @@ export default class PlayCommand extends Command {
         const node = this.client.erela.leastUsedNodes.first()
         if (!node || !node.connected) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | No nodes are currently connected.'
             })]
@@ -19,20 +19,11 @@ export default class PlayCommand extends Command {
         }
 
         const queryArg = args[0]
-        if (!queryArg) {
-          msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
-              color: 'YELLOW',
-              description: '⛔ | No arguments provided.'
-            })]
-          })
-          return
-        }
 
         const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | No result found.'
             })]
@@ -42,7 +33,7 @@ export default class PlayCommand extends Command {
 
         if (musicTrack.loadType === 'LOAD_FAILED') {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | An error occured when loading the track.'
             })]
@@ -52,7 +43,7 @@ export default class PlayCommand extends Command {
 
         if (!msg.member?.voiceState.channelID) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | you must join voice channel to do this.'
             })]
@@ -79,7 +70,7 @@ export default class PlayCommand extends Command {
             }
 
             msg.channel.createMessage({
-              embeds: [this.client.utils.CreateEmbed({
+              embeds: [this.client.utils.createEmbed({
                 description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
@@ -89,7 +80,7 @@ export default class PlayCommand extends Command {
             player.queue.add(musicTrack.tracks[0])
 
             msg.channel.createMessage({
-              embeds: [this.client.utils.CreateEmbed({
+              embeds: [this.client.utils.createEmbed({
                 description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
               })]
             })
@@ -100,7 +91,7 @@ export default class PlayCommand extends Command {
         // If player already exists
         if (msg.member.voiceState.channelID !== guildPlayer.voiceChannel) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | you must join voice channel same as me to do this.'
             })]
@@ -115,7 +106,7 @@ export default class PlayCommand extends Command {
           }
 
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
             })]
@@ -127,7 +118,7 @@ export default class PlayCommand extends Command {
         guildPlayer.queue.add(musicTrack.tracks[0])
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'YELLOW',
             description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
           })]
@@ -135,9 +126,9 @@ export default class PlayCommand extends Command {
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]

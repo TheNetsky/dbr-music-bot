@@ -16,7 +16,7 @@ export default class queueEndEvent extends Event {
     if (!queueChannel) return
 
     queueChannel.createMessage({
-      embeds: [client.utils.CreateEmbed({
+      embeds: [client.utils.createEmbed({
         description: '⏹ | queue has ended.'
       })]
     })

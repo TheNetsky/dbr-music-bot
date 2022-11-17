@@ -13,9 +13,8 @@ export default class trackStartEvent extends Event {
     const queueChannel = client.getChannel(player.textChannel as string) as TextChannel
     if (!queueChannel) return
 
-
     const sendMessage = await queueChannel.createMessage({
-      embeds: [client.utils.CreateEmbed({
+      embeds: [client.utils.createEmbed({
         title: `${track.title}`,
         url: `${track.uri}`,
         author: {

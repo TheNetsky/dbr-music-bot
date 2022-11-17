@@ -9,6 +9,6 @@ export default class nodeDestroyEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.warn(`NODE [${node.options.identifier}] DESTROYED`)
+    client.logger.warn(`${node.options.identifier}`, 'DESTROYED')
   }
 }

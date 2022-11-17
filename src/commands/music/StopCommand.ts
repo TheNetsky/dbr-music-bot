@@ -10,7 +10,7 @@ export default class StopCommand extends Command {
         const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -22,16 +22,16 @@ export default class StopCommand extends Command {
         guildPlayer.destroy()
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: '☠️ | Ended the music player!'
           })]
         })
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]
@@ -40,6 +40,7 @@ export default class StopCommand extends Command {
       }
     },
       {
+        aliases: ['leave'],
         description: 'Stop playing music.',
         usage: 'stop'
       })

@@ -11,7 +11,7 @@ export default class QueueCommand extends Command {
         const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -20,7 +20,7 @@ export default class QueueCommand extends Command {
 
         if (guildPlayer.queue.size < 1) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``
             })],
           })
@@ -34,7 +34,7 @@ export default class QueueCommand extends Command {
 
         let i = 1
         for (const chunk of chunks) {
-          const embed = this.client.utils.CreateEmbed({
+          const embed = this.client.utils.createEmbed({
             description: chunk.join('\n'),
             author: {
               name: `${guild?.name}'s track queue`,
@@ -51,9 +51,9 @@ export default class QueueCommand extends Command {
         await new Pagination(this.client, msg, embeds).start()
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]

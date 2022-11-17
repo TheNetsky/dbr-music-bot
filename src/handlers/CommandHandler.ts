@@ -26,18 +26,23 @@ export class CommandHandler {
         this.client.registerCommandAlias(aliases, command.label)
       }
 
+      // Set some requirements beforehand
+      command.cooldown = erisCommand.cooldown
+      command.requirements.custom = erisCommand.requirements.custom
+
       Object.assign(erisCommand, command)
 
       if (erisCommand.usage) {
         erisCommand.invalidUsageMessage = {
-          embeds: [this.client.utils.CreateEmbed({
-            description: `⛔ | Invalid Usage/Arguments\nUsage: \`${erisCommand.usage}\``
-          })]
+          embeds: [this.client.utils.
+            createEmbed({
+              description: `⛔ | Invalid Usage/Arguments\nUsage: \`${erisCommand.usage}\``
+            })]
         }
       }
 
       if (process.env['DEBUG_MODE'] === 'true') {
-        this.client.logger.log(`COMMAND: Loaded ${command.label}`)
+        this.client.logger.info('COMMAND', `Loaded ${command.label}`)
       }
     }
   }

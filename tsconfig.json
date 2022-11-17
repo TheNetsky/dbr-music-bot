@@ -47,6 +47,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "interfaces/*": [
+        "./src/interfaces/*"
+      ],
       "structures/*": [
         "./src/structures/*"
       ],

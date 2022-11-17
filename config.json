@@ -1,5 +1,9 @@
 {
-  "owner": "140415255741333504",
+  "devId": "140415255741333504",
+  "devBypass": false,
+  "bypassPermissions": [
+    "manageMessages"
+  ],
   "nodes": [
     {
       "identifier": "NODE-MAIN-2",
@@ -9,5 +13,7 @@
       "secure": false
     }
   ],
-  "prefix": "!"
+  "prefixes": [
+    "!"
+  ]
 }

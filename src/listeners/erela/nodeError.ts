@@ -9,6 +9,6 @@ export default class nodeErrorEvent extends Event {
   }
 
   async execute(client: Client, node: Node, error: Error) {
-    client.logger.warn(`NODE [${node.options.identifier}] ERROR`, error)
+    client.logger.error(`${node.options.identifier}`, error)
   }
 }

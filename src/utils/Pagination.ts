@@ -1,6 +1,7 @@
 import * as DJS from 'eris'
 import * as EmbedPaginator from 'eris-pagination'
 
+
 export class Pagination {
   client: DJS.Client
   msg: DJS.Message
@@ -10,7 +11,6 @@ export class Pagination {
     this.msg = msg
     this.pages = pages
   }
-
 
   async start() {
 

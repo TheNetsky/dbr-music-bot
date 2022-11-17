@@ -11,7 +11,7 @@ export default class StatsCommand extends Eris.Command {
 
       try {
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: stripIndent`
             **System Statistics**
             \`\`\`js
@@ -30,9 +30,9 @@ export default class StatsCommand extends Eris.Command {
           })]
         })
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]
@@ -44,7 +44,7 @@ export default class StatsCommand extends Eris.Command {
         usage: 'stats',
         hidden: true,
         requirements: {
-          userIDs: [client.config.owner]
+          userIDs: [client.config.devId]
         }
       })
   }

@@ -1,33 +1,33 @@
-import log4js from 'log4js'
+import chalk from 'chalk'
 
-
-log4js.configure(
-  {
-    appenders: {
-      file: {
-        type: 'file',
-        filename: 'logs/logs.log',
-        maxLogSize: 10 * 1024 * 1024, // = 10Mb
-        backups: 5, // Keep five backup files
-        compress: true, // Compress the backups
-        encoding: 'utf-8',
-        mode: 0o0640,
-        flags: 'w+'
-      },
-      dateFile: {
-        type: 'dateFile',
-        filename: 'logs/dbr.log',
-        pattern: 'yyyy-MM-dd-hh',
-        compress: true
-      },
-      out: {
-        type: 'stdout'
-      },
-    },
-    categories: {
-      default: { appenders: ['file', 'dateFile', 'out'], level: 'info' }
-    }
+class Logger {
+  get now() {
+    return Intl.DateTimeFormat('be-BE', {
+      minute: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      second: '2-digit',
+    }).format(Date.now())
   }
-)
-export const logger = log4js.getLogger('DBR-MUSIC')
 
+  error(type: string, error: unknown) {
+    const message = error instanceof Error ? error.message : error
+    return console.error(`${chalk.red('[ERROR]')}[${type.toUpperCase()}][${this.now}]: ${message}`)
+  }
+
+  warn(type: string, warning: string) {
+    return console.warn(
+      `${chalk.yellow('[WARNING]')}[${type.toUpperCase()}][${this.now}]: ${warning}`,
+    )
+  }
+
+  info(type: string, message: string) {
+    return console.log(
+      `${chalk.blueBright('[INFO]')}[${type.toUpperCase()}][${this.now}]: ${message}`,
+    )
+  }
+}
+
+export const logger = new Logger()

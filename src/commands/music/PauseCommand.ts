@@ -10,7 +10,7 @@ export default class PauseCommand extends Command {
         const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | There no music playing in this guild.'
             })]
@@ -23,16 +23,16 @@ export default class PauseCommand extends Command {
         guildPlayer.pause(true)
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: '✅ | Paused guild queue.'
           })]
         })
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]

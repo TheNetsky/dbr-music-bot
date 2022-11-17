@@ -12,7 +12,7 @@ export default class RemoveCommand extends Command {
         let trackArg: any = args[0]
         if (!trackArg || isNaN(Number(trackArg))) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | No arguments provided.'
             })]
@@ -25,7 +25,7 @@ export default class RemoveCommand extends Command {
         const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There no music playing in this guild.'
             })]
           })
@@ -36,7 +36,7 @@ export default class RemoveCommand extends Command {
 
         if (trackArg > guildPlayer.queue.size || trackArg < 1) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               description: '⛔ | There\'s no track with this queue position.\nUse the \`queue\` command to see the current queue.'
             })]
           })
@@ -44,7 +44,7 @@ export default class RemoveCommand extends Command {
         }
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: `💀 | Removed track \`${guildPlayer.queue[trackArg - 1].title}\``
           })]
         })
@@ -53,9 +53,9 @@ export default class RemoveCommand extends Command {
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'RED',
             description: '⛔ | An error occured.'
           })]

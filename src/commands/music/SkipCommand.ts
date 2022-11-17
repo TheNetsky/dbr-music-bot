@@ -10,7 +10,7 @@ export default class SkipCommand extends Command {
         const guildPlayer = this.client.erela.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
-            embeds: [this.client.utils.CreateEmbed({
+            embeds: [this.client.utils.createEmbed({
               color: 'YELLOW',
               description: '⛔ | There no music playing in this guild.'
             })]
@@ -23,16 +23,16 @@ export default class SkipCommand extends Command {
         guildPlayer.stop()
 
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             description: '⏭ | Skipped current track.'
           })]
         })
         return
 
       } catch (e) {
-        this.client.logger.error(e.message)
+        this.client.logger.error('CMD', e)
         msg.channel.createMessage({
-          embeds: [this.client.utils.CreateEmbed({
+          embeds: [this.client.utils.createEmbed({
             color: 'YELLOW',
             description: '⛔ | An error occured.'
           })]

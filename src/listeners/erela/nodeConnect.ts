@@ -9,6 +9,6 @@ export default class nodeConnectEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.info(`NODE [${node.options.identifier}] CONNECTED`)
+    client.logger.info(`${node.options.identifier}`, 'CONNECTED')
   }
 }

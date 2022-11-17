@@ -4,11 +4,12 @@ import { EventHandler } from 'handlers/EventHandler'
 import { CommandHandler } from 'handlers/CommandHandler'
 import { Manager } from 'erela.js'
 import { Spotify } from 'better-erela.js-spotify'
-import Jsoning from 'jsoning'
 import config from '../../config.json'
 import { Utils } from 'utils/Utils'
 import { logger } from 'utils/Logger'
-
+import commandChecks from 'utils/CommandChecks'
+import Jsoning from 'jsoning'
+const db = new Jsoning('db.json')
 
 export class Client extends CommandClient {
 
@@ -18,14 +19,17 @@ export class Client extends CommandClient {
         intents: ['guildMessages', 'guildVoiceStates', 'guilds', 'guildMessageReactions', 'guildMembers'],
       },
       {
-        prefix: config.prefix,
-        owner: config.owner,
+        prefix: config.prefixes,
+        owner: config.devId,
         ignoreBots: true,
         ignoreSelf: true,
         defaultHelpCommand: true,
         defaultCommandOptions: {
           cooldown: 3000,
-          guildOnly: true
+          guildOnly: true,
+          requirements: {
+            custom: commandChecks
+          }
         }
       })
 
@@ -33,8 +37,8 @@ export class Client extends CommandClient {
     new CommandHandler(this).loadCommands()
   }
 
-  public utils = new Utils()
-  public db = new Jsoning('db.json')
+  public utils = new Utils(this)
+  public db = db
   public logger = logger
   public config = config
 

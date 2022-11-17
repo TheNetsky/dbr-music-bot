@@ -38,7 +38,7 @@ export class EventHandler {
       }
 
       if (process.env['DEBUG_MODE'] === 'true') {
-        this.client.logger.log(`EVENT: Loaded ${event.name}`)
+        this.client.logger.info('EVENT', `Loaded ${event.name}`)
       }
     }
   }
