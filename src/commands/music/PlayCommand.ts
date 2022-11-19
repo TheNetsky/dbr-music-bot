@@ -18,7 +18,7 @@ export default class PlayCommand extends Command {
           return
         }
 
-        const queryArg = args[0]
+        const queryArg = args.join(' ')
 
         const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
