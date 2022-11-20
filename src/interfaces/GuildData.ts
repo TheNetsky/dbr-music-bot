@@ -3,4 +3,5 @@ export interface GuildData {
     DJRoleOnly?: boolean
     musicChannel?: string
     musicChannelOnly?: boolean
+    leaveQueueEnd?: boolean
 }

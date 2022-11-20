@@ -43,8 +43,9 @@ export default class SetDJRoleCommand extends Command {
       }
     },
       {
+        aliases: ['djrole'],
         description: 'Set the DJ role.',
-        usage: 'setdjrole {role}',
+        usage: 'SetDJRole {role}',
         argsRequired: true
       })
   }

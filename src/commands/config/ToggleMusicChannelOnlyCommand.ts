@@ -2,9 +2,9 @@ import { Command } from 'eris'
 import { Client } from 'structures/Client'
 
 
-export default class SetMusicChannelOnly extends Command {
+export default class ToggleMusicChannelOnlyCommand extends Command {
   constructor(public client: Client) {
-    super('setmusicchannelonly', async (msg) => {
+    super('togglemusicchannelonly', async (msg) => {
 
       try {
         const guildData = await this.client.utils.getGuildData(msg.guildID as string) ?? { musicChannelOnly: false }
@@ -39,8 +39,9 @@ export default class SetMusicChannelOnly extends Command {
       }
     },
       {
-        description: 'Set music commands to the music channel only.',
-        usage: 'setmusicchannelonly'
+        aliases: ['setmusicchannelonly', 'musicchannelonly'],
+        description: 'Toggle if music commands should be music channel only.',
+        usage: 'ToggleMusicChannelOnly'
       })
   }
   public category = 'Config'

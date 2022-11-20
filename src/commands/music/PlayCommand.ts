@@ -119,7 +119,6 @@ export default class PlayCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'YELLOW',
             description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
           })]
         })

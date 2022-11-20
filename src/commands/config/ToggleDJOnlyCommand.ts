@@ -2,9 +2,9 @@ import { Command } from 'eris'
 import { Client } from 'structures/Client'
 
 
-export default class SetDJOnlyCommand extends Command {
+export default class ToggleDJOnlyCommand extends Command {
   constructor(public client: Client) {
-    super('setdjonly', async (msg) => {
+    super('toggledjonly', async (msg) => {
 
       try {
         const guildData = await this.client.utils.getGuildData(msg.guildID as string) ?? { DJRoleOnly: false }
@@ -39,8 +39,9 @@ export default class SetDJOnlyCommand extends Command {
       }
     },
       {
-        description: 'Set music commands to DJ role only.',
-        usage: 'setdjonly'
+        aliases: ['setdjonly', 'djonly'],
+        description: 'Toggle if the music commands should be DJ role only.',
+        usage: 'ToggleDJOnly'
       })
   }
   public category = 'Config'

@@ -10,7 +10,7 @@ export default class queueEndEvent extends Event {
   }
 
   async execute(client: Client, player: Player) {
-    if (!client.db.get(`${player.guild}_leaveOnQueueEnd`)) return
+    const guildData = await this.client.utils.getGuildData(player.guild as string) ?? { leaveQueueEnd: true }
 
     const queueChannel = client.getChannel(player.textChannel as string) as TextChannel
     if (!queueChannel) return
@@ -20,6 +20,9 @@ export default class queueEndEvent extends Event {
         description: '⏹ | queue has ended.'
       })]
     })
+
+    if (!guildData.leaveQueueEnd) return
+
     player.destroy()
   }
 }

@@ -69,7 +69,7 @@ export default class EqualizerCommand extends Command {
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
             description: `✅ | The equalizer has been set to:\nPreset: \`${preset.name}\`\nIntensity: \`${intensity}\``,
-            footer: { text: 'User "reset" to reset the equalizer.' }
+            footer: { text: 'Use "reset" to reset the equalizer.' }
           })]
         })
         return

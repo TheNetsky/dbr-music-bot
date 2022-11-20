@@ -43,8 +43,9 @@ export default class SetMusicChannelCommand extends Command {
       }
     },
       {
+        aliases: ['musicchannel'],
         description: 'Set the music channel.',
-        usage: 'setmusicchannel {channel}',
+        usage: 'SetMusicChannel {channel}',
         argsRequired: true
       })
   }

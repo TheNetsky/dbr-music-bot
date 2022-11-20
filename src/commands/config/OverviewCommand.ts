@@ -35,6 +35,10 @@ export default class OverviewCommandCommand extends Command {
               {
                 name: 'Music Channel',
                 value: `**Channel:** ${guildData.musicChannel ? `<#${guildData.musicChannel}>` : '\`None\`'}\n**Music Channel Only:** ${guildData.musicChannelOnly ? '\`Enabled\`' : '\`Disabled\`'}`
+              },
+              {
+                name: 'Other',
+                value: `**Leave On Queue End:** ${guildData.leaveQueueEnd ? '\`Enabled\`' : '\`Disabled\`'}`
               }
             ]
           })]
@@ -53,6 +57,7 @@ export default class OverviewCommandCommand extends Command {
       }
     },
       {
+        aliases: ['ov'],
         description: 'See an overview of your settings.',
         usage: 'overview'
       })
