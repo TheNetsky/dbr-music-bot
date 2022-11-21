@@ -66,12 +66,6 @@ export default class EqualizerCommand extends Command {
 
             await new Promise(r => setTimeout(r, 5000))
 
-            msg.channel.createMessage({
-              embeds: [this.client.utils.createEmbed({
-                description: `✅ | Getting ready for custom EQ...`
-              })]
-            })
-
             await guildPlayer.setEQ(EQObject)
 
             msg.channel.createMessage({
