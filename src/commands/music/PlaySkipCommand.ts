@@ -18,7 +18,7 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
-        const queryArg = args[0]
+        const queryArg = args.join(' ')
 
         const musicTrack = await this.client.erela.search(queryArg, msg.author)
         if (musicTrack.loadType === 'NO_MATCHES') {
@@ -68,7 +68,7 @@ export default class PlaySkipCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.createEmbed({
-                description: `✅ | Added Playlist ${musicTrack.playlist?.name} [${msg.author}] [\`${musicTrack.tracks.length} tracks\`]`
+                description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
 
@@ -78,7 +78,7 @@ export default class PlaySkipCommand extends Command {
 
             msg.channel.createMessage({
               embeds: [this.client.utils.createEmbed({
-                description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [${msg.author}]`
+                description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
               })]
             })
           }
@@ -104,6 +104,19 @@ export default class PlaySkipCommand extends Command {
             })]
           })
           return
+        }
+
+        // If no queue
+        if (guildPlayer.queue.length == 0) {
+          guildPlayer.queue.add(musicTrack.tracks[0])
+
+          msg.channel.createMessage({
+            embeds: [this.client.utils.createEmbed({
+              description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+            })]
+          })
+
+          return guildPlayer.play()
         }
 
         // If query is a number
@@ -154,7 +167,7 @@ export default class PlaySkipCommand extends Command {
         aliases: ['ps'],
         description: 'Skip and play current track.',
         usage: 'playskip {YouTube URL, Spotify URL, search query or queue position}',
-        argsRequired:  true
+        argsRequired: true
       })
   }
   public category = 'Music'
