@@ -1,6 +1,7 @@
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
 import { KazagumoPlayer } from 'kazagumo'
+
+import { Client } from '../../structures/Client'
+import { Event } from '../../structures/Event'
 
 
 export default class socketClosedEvent extends Event {

@@ -3,8 +3,7 @@ import duration from 'dayjs/plugin/duration'
 import { EmbedOptions, Message } from 'eris'
 import { KazagumoPlayer } from 'kazagumo'
 
-
-import { Client } from 'structures/Client'
+import { Client } from '../structures/Client'
 
 dayjs.extend(duration)
 

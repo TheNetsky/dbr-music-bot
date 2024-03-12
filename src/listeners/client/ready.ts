@@ -1,5 +1,5 @@
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
+import { Client } from '../../structures/Client'
+import { Event } from '../../structures/Event'
 
 
 export default class ReadyEvent extends Event {

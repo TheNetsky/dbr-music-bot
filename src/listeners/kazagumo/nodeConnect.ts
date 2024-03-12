@@ -1,6 +1,7 @@
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
 import { Node } from 'shoukaku'
+
+import { Client } from '../../structures/Client'
+import { Event } from '../../structures/Event'
 
 
 export default class nodeConnectEvent extends Event {

@@ -1,7 +1,7 @@
 import glob from 'glob'
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
-import { resolveFile, validateFile } from 'utils/HandlersUtil'
+import { Client } from '../structures/Client'
+import { Event } from '../structures/Event'
+import { resolveFile, validateFile } from '../utils/HandlersUtil'
 
 export class EventHandler {
   client: Client
@@ -12,8 +12,8 @@ export class EventHandler {
 
   async loadEvents() {
 
-    const files = process.env.BUILD_PATH
-      ? glob.sync('./dist/src/listeners/**/*.js')
+    const files = process.env.DEV_MODE === 'false'
+      ? glob.sync('./compiled/src/listeners/**/*.js')
       : glob.sync('./src/listeners/**/*.ts')
 
     for (const file of files) {
@@ -41,7 +41,7 @@ export class EventHandler {
         this.client.on(event.name, event.execute.bind(null, this.client))
       }
 
-      if (process.env['DEBUG_MODE'] === 'true') {
+      if (process.env['DEV_MODE'] === 'true') {
         this.client.logger.info('EVENT', `Loaded ${event.name}`)
       }
     }

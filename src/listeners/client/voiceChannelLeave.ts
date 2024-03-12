@@ -1,6 +1,7 @@
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
 import { Member, TextVoiceChannel } from 'eris'
+
+import { Client } from '../../structures/Client'
+import { Event } from '../../structures/Event'
 
 
 export default class voiceChannelLeaveEvent extends Event {

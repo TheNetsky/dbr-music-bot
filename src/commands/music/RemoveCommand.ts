@@ -1,7 +1,7 @@
 
 import { Command } from 'eris'
 
-import { Client } from 'structures/Client'
+import { Client } from '../../structures/Client'
 
 
 export default class RemoveCommand extends Command {

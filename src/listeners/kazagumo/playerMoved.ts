@@ -1,7 +1,8 @@
-import { Client } from 'structures/Client'
-import { Event } from 'structures/Event'
 import { KazagumoPlayer } from 'kazagumo'
 import { VoiceChannel } from 'eris'
+
+import { Client } from '../../structures/Client'
+import { Event } from '../../structures/Event'
 
 
 export default class playerMovedEvent extends Event {

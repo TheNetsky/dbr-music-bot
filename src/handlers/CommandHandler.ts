@@ -1,6 +1,6 @@
 import glob from 'glob'
-import { resolveFile } from 'utils/HandlersUtil'
-import { Client } from 'structures/Client'
+import { resolveFile } from '../utils/HandlersUtil'
+import { Client } from '../structures/Client'
 
 
 export class CommandHandler {
@@ -12,8 +12,8 @@ export class CommandHandler {
 
   async loadCommands() {
 
-    const files = process.env.BUILD_PATH
-      ? glob.sync('./dist/src/commands/**/*.js')
+    const files = process.env.DEV_MODE === 'false'
+      ? glob.sync('./compiled/src/commands/**/*.js')
       : glob.sync('./src/commands/**/*.ts')
 
     for (const file of files) {
@@ -41,7 +41,7 @@ export class CommandHandler {
         }
       }
 
-      if (process.env['DEBUG_MODE'] === 'true') {
+      if (process.env['DEV_MODE'] === 'true') {
         this.client.logger.info('COMMAND', `Loaded ${command.label}`)
       }
     }

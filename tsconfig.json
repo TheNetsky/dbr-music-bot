@@ -17,24 +17,6 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "outDir": "compiled/",
-    "baseUrl": ".",
-    "paths": {
-      "interfaces/*": [
-        "./src/interfaces/*"
-      ],
-      "structures/*": [
-        "./src/structures/*"
-      ],
-      "handlers/*": [
-        "src/handlers/*"
-      ],
-      "utils/*": [
-        "src/utils/*"
-      ],
-      "@commands/*": [
-        "./src/commands/*"
-      ],
-    },    
+    "outDir": "compiled/"
   }
 }

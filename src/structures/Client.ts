@@ -6,12 +6,12 @@ import Apple from 'kazagumo-apple'
 import KazagumoFilter from 'kazagumo-filter'
 import Deezer from 'kazagumo-deezer'
 
-import { EventHandler } from 'handlers/EventHandler'
-import { CommandHandler } from 'handlers/CommandHandler'
+import { EventHandler } from '../handlers/EventHandler'
+import { CommandHandler } from '../handlers/CommandHandler'
 
-import { Utils } from 'utils/Utils'
-import { logger } from 'utils/Logger'
-import commandChecks from 'utils/CommandChecks'
+import { Utils } from '../utils/Utils'
+import { logger } from '../utils/Logger'
+import commandChecks from '../utils/CommandChecks'
 
 import config from '../../config.json'
 

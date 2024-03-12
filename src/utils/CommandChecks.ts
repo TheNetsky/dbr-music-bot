@@ -1,5 +1,7 @@
 import { Command, CommandRequirements, Message } from 'eris'
-import { Client } from 'structures/Client'
+
+import { Client } from '../structures/Client'
+
 
 export default async (message: Message): Promise<boolean> => {
 
@@ -8,7 +10,7 @@ export default async (message: Message): Promise<boolean> => {
     const command: Command = message.command as Command
     const requirements: CommandRequirements = message.command?.requirements as CommandRequirements
 
-    if (process.env['DEBUG_MODE'] === 'true') {
+    if (process.env['DEV_MODE'] === 'true') {
         client.logger.info('COMMAND', `Executed command ${command.label}`)
     }
 

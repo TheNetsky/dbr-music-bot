@@ -7,7 +7,7 @@
   "nodes": [
     {
       "name": "NODE-MAIN-1",
-      "url": "127.0.0.1:443",
+      "url": "127.0.0.1:2333",
       "auth": "youshallnotpass",
       "secure": false
     }

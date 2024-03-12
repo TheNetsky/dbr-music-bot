@@ -1,7 +1,8 @@
 import * as Eris from 'eris'
-import { Client } from 'structures/Client'
-import { version } from 'package.json'
 import ms from 'ms'
+
+import { Client } from '../../structures/Client'
+import { version } from '../../../package.json'
 
 
 export default class StatsCommand extends Eris.Command {
