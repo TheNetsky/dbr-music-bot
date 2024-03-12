@@ -1,4 +1,5 @@
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -7,7 +8,7 @@ export default class LoopCommand extends Command {
     super('loop', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -19,11 +20,11 @@ export default class LoopCommand extends Command {
 
         if (!this.client.utils.passedUserRequirements(msg, guildPlayer)) return
 
-        guildPlayer.setTrackRepeat(!guildPlayer.trackRepeat)
+        guildPlayer.setLoop(guildPlayer.loop === 'none' ? 'track' : 'none')
 
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            description: `${guildPlayer.trackRepeat ? '🔂 | Enabled track loop' : '▶️ | Disabled track loop'}`
+            description: `${guildPlayer.loop === 'track' ? '🔂 | Enabled track loop' : '▶️ | Disabled track loop'}`
           })]
         })
         return
@@ -32,9 +33,8 @@ export default class LoopCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
         return
       }

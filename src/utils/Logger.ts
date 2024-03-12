@@ -8,7 +8,7 @@ class Logger {
       hour: '2-digit',
       month: '2-digit',
       year: 'numeric',
-      second: '2-digit',
+      second: '2-digit'
     }).format(Date.now())
   }
 
@@ -19,13 +19,13 @@ class Logger {
 
   warn(type: string, warning: string) {
     return console.warn(
-      `${chalk.yellow('[WARNING]')}[${type.toUpperCase()}][${this.now}]: ${warning}`,
+      `${chalk.yellow('[WARNING]')}[${type.toUpperCase()}][${this.now}]: ${warning}`
     )
   }
 
   info(type: string, message: string) {
     return console.log(
-      `${chalk.blueBright('[INFO]')}[${type.toUpperCase()}][${this.now}]: ${message}`,
+      `${chalk.blueBright('[INFO]')}[${type.toUpperCase()}][${this.now}]: ${message}`
     )
   }
 }

@@ -1,5 +1,7 @@
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
+
 import { Pagination } from 'utils/Pagination'
 
 
@@ -8,7 +10,7 @@ export default class QueueCommand extends Command {
     super('queue', async (msg) => {
 
       try {
-        const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -21,27 +23,28 @@ export default class QueueCommand extends Command {
         if (guildPlayer.queue.size < 1) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester?.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``
-            })],
+              // @ts-expect-error Is valid
+              description: `Now Playing:\n\`\`\`css\n${guildPlayer?.queue.current?.title} | [${guildPlayer?.queue.current?.requester.username}]\`\`\`\n\nNext Track:\n\`\`\`css\n${guildPlayer?.queue.values().next().value ? `${guildPlayer.queue.values().next().value.title} | [${guildPlayer.queue.values().next().value.requester.username}]` : 'Nothing'}\`\`\``
+            })]
           })
           return
         }
 
-        const chunks = this.client.utils.chunk(guildPlayer?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester.username}]`), 7)
+        // @ts-expect-error Is valid
+        const chunks: any[] = this.client.utils.chunk(guildPlayer?.queue.map((x, i) => `\`${i + 1}\` ${x.title} [${x.requester.username}]`), 7)
         const guild = this.client.guilds.get(msg.guildID as string)
 
-        const embeds: Array<any> = []
+        const embeds: Array<unknown> = []
 
         let i = 1
         for (const chunk of chunks) {
           const embed = this.client.utils.createEmbed({
             description: chunk.join('\n'),
             author: {
-              name: `${guild?.name}'s track queue`,
-              icon_url: guild?.iconURL
+              name: `${guild?.name}'s track queue`
             },
             footer: {
-              text: `${i++}/${chunks.length}`,
+              text: `${i++}/${chunks.length} | User !q {page} for the next page`
             }
           })
           embeds.push(embed)
@@ -54,9 +57,8 @@ export default class QueueCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
         return
       }

@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { Node } from 'erela.js'
+import { Node } from 'shoukaku'
 
 
 export default class nodeConnectEvent extends Event {
@@ -9,6 +9,6 @@ export default class nodeConnectEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.info(`${node.options.identifier}`, 'CONNECTED')
+    client.logger.info(`${node.name}`, 'CONNECTED')
   }
 }

@@ -2,7 +2,6 @@ import * as Eris from 'eris'
 import { Client } from 'structures/Client'
 import { version } from 'package.json'
 import ms from 'ms'
-import { stripIndent } from 'common-tags'
 
 
 export default class StatsCommand extends Eris.Command {
@@ -12,7 +11,7 @@ export default class StatsCommand extends Eris.Command {
       try {
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            description: stripIndent`
+            description: `
             **System Statistics**
             \`\`\`ts
             Operating System: ${process.platform}
@@ -24,11 +23,11 @@ export default class StatsCommand extends Eris.Command {
             \`\`\`
             **Node Statistics**
             \`\`\`css
-            Uptime: ${ms(this.client.erela.nodes.values().next().value.stats.uptime, { long: true })}
-            Active Players: ${this.client.erela.nodes.values().next().value.stats.playingPlayers}
-            Memory Allocated: ${Math.floor(this.client.erela.nodes.values().next().value.stats.memory.allocated / 1024 / 1024)}MB
-            Memory Used: ${Math.floor(this.client.erela.nodes.values().next().value.stats.memory.used / 1024 / 1024)}MB
-            CPU Load: ${Math.floor(this.client.erela.nodes.values().next().value.stats.cpu.lavalinkLoad)}%
+            Uptime: ${ms(this.client.kazagumo.shoukaku.nodes.values().next().value.stats.uptime, { long: true })}
+            Active Players: ${this.client.kazagumo.shoukaku.nodes.values().next().value.stats.playingPlayers}
+            Memory Allocated: ${Math.floor(this.client.kazagumo.shoukaku.nodes.values().next().value.stats.memory.allocated / 1024 / 1024)}MB
+            Memory Used: ${Math.floor(this.client.kazagumo.shoukaku.nodes.values().next().value.stats.memory.used / 1024 / 1024)}MB
+            CPU Load: ${Math.floor(this.client.kazagumo.shoukaku.nodes.values().next().value.stats.cpu.lavalinkLoad)}%
             \`\`\`
             `
           })]
@@ -38,9 +37,8 @@ export default class StatsCommand extends Eris.Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
       }
     },

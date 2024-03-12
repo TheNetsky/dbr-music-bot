@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { Node } from 'erela.js'
+import { Node } from 'shoukaku'
 
 
 export default class nodeErrorEvent extends Event {
@@ -9,6 +9,6 @@ export default class nodeErrorEvent extends Event {
   }
 
   async execute(client: Client, node: Node, error: Error) {
-    client.logger.error(`${node.options.identifier}`, error)
+    client.logger.error(`${node.name}`, error)
   }
 }

@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { Node } from 'erela.js'
+import { Node } from 'shoukaku'
 
 
 export default class nodeDisconnectEvent extends Event {
@@ -9,6 +9,6 @@ export default class nodeDisconnectEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.warn(`${node.options.identifier}`, 'DISCONNECTED')
+    client.logger.warn(`${node.name}`, 'DISCONNECTED')
   }
 }

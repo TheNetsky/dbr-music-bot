@@ -11,7 +11,7 @@ export default class voiceChannelLeaveEvent extends Event {
   async execute(client: Client, member: Member, channel: TextVoiceChannel) {
 
     if (channel.voiceMembers.filter((member) => !member.user.bot).length === 0) {
-      const guildPlayer = client.erela.players.get(channel.guild.id)
+      const guildPlayer = client.kazagumo.players.get(channel.guild.id)
 
       if (!guildPlayer) {
         if (channel.voiceMembers.find(x => x.id == client.user.id)) {

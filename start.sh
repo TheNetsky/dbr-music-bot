@@ -1,2 +1,2 @@
-npm i node@16
+npm i node@21
 npm run start

@@ -1,5 +1,6 @@
 
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -8,7 +9,7 @@ export default class ClearCommand extends Command {
     super('clear', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -33,9 +34,8 @@ export default class ClearCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
         return
       }

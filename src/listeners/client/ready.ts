@@ -8,8 +8,8 @@ export default class ReadyEvent extends Event {
   }
 
   async execute(client: Client) {
-    client.logger.info('CLIENT',`READY!`)
+    client.logger.info('CLIENT','READY!')
+    
     client.editStatus('online', { name: 'Buurman & Buurman, Back to back!', type: 2 })
-    client.erela.init(client.user?.id)
   }
 }

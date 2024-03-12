@@ -1,4 +1,5 @@
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -7,34 +8,12 @@ export default class PlaySkipCommand extends Command {
     super('playskip', async (msg, args) => {
 
       try {
-        const node = this.client.erela.leastUsedNodes.first()
-        if (!node || !node.connected) {
+        const node = await this.client.kazagumo.getLeastUsedNode()
+        if (!node || !node.sessionId) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              color: 'YELLOW',
               description: '⛔ | No nodes are currently connected.'
-            })]
-          })
-          return
-        }
-
-        const queryArg = args.join(' ')
-
-        const musicTrack = await this.client.erela.search(queryArg, msg.author)
-        if (musicTrack.loadType === 'NO_MATCHES') {
-          msg.channel.createMessage({
-            embeds: [this.client.utils.createEmbed({
-              description: '⛔ | No result found.'
-            })]
-          })
-          return
-        }
-
-        if (musicTrack.loadType === 'LOAD_FAILED') {
-          msg.channel.createMessage({
-            embeds: [this.client.utils.createEmbed({
-              description: '⛔ | An error occured when loading the track.'
-            })]
+            }, 'YELLOW')]
           })
           return
         }
@@ -48,27 +27,38 @@ export default class PlaySkipCommand extends Command {
           return
         }
 
+        const queryArg = args.join(' ')
+
+        const musicTrack = await this.client.kazagumo.search(queryArg, { requester: msg.author })
+
+        if (musicTrack.type === 'SEARCH') {
+          msg.channel.createMessage({
+            embeds: [this.client.utils.createEmbed({
+              description: '⛔ | No result found.'
+            }, 'YELLOW')]
+          })
+          return
+        }
+
         // If no play exists
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
-          const player = await this.client.erela.create({
-            guild: msg.guildID as string,
-            voiceChannel: msg.member.voiceState.channelID as string,
-            textChannel: msg.channel.id,
-            selfDeafen: true
+          const player = await this.client.kazagumo.createPlayer({
+            guildId: msg.guildID as string,
+            voiceId: msg.member.voiceState.channelID as string,
+            textId: msg.channel.id,
+            data: true
           })
 
-          player.connect()
-
           // Load playlist
-          if (musicTrack.loadType === 'PLAYLIST_LOADED') {
+          if (musicTrack.type === 'PLAYLIST') {
             for (const track of musicTrack.tracks) {
               player.queue.add(track)
             }
 
             msg.channel.createMessage({
               embeds: [this.client.utils.createEmbed({
-                description: `✅ | Added Playlist ${musicTrack.playlist?.name} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
+                description: `✅ | Added Playlist ${musicTrack.playlistName} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
               })]
             })
 
@@ -87,7 +77,7 @@ export default class PlaySkipCommand extends Command {
         }
 
         // If player already exists
-        if (msg.member.voiceState.channelID !== guildPlayer.voiceChannel) {
+        if (msg.member.voiceState.channelID !== guildPlayer.voiceId) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
               description: '⛔ | you must join voice channel same as me to do this.'
@@ -97,7 +87,7 @@ export default class PlaySkipCommand extends Command {
         }
 
         // If playlist
-        if (musicTrack.loadType === 'PLAYLIST_LOADED') {
+        if (musicTrack.type === 'PLAYLIST') {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
               description: '⛔ | you can only playskip with a single track.'
@@ -116,7 +106,8 @@ export default class PlaySkipCommand extends Command {
             })]
           })
 
-          return guildPlayer.play()
+          guildPlayer.play()
+          return
         }
 
         // If query is a number
@@ -126,13 +117,13 @@ export default class PlaySkipCommand extends Command {
           if (trackNumber > guildPlayer.queue.size || trackNumber < 1) {
             msg.channel.createMessage({
               embeds: [this.client.utils.createEmbed({
-                description: '⛔ | There\'s no track with this queue position.\nUse the \`queue\` command to see the current queue.'
+                description: '⛔ | There\'s no track with this queue position.\nUse the `queue` command to see the current queue.'
               })]
             })
             return
           }
 
-          guildPlayer.stop(trackNumber)
+          guildPlayer.shoukaku.stopTrack()
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
               description: `⏭ | Playskipped track \`${guildPlayer.queue.current?.title}\``
@@ -143,7 +134,7 @@ export default class PlaySkipCommand extends Command {
 
         // Play single track
         guildPlayer.queue.unshift(musicTrack.tracks[0])
-        guildPlayer.stop()
+        guildPlayer.shoukaku.stopTrack()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
@@ -156,9 +147,8 @@ export default class PlaySkipCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured'
-          })]
+          }, 'RED')]
         })
         return
       }

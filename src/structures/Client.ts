@@ -1,22 +1,27 @@
 import 'dotenv/config'
 import { CommandClient } from 'eris'
+import { Connectors } from 'shoukaku'
+import { Kazagumo } from 'kazagumo'
+import Apple from 'kazagumo-apple'
+import KazagumoFilter from 'kazagumo-filter'
+import Deezer from 'kazagumo-deezer'
+
 import { EventHandler } from 'handlers/EventHandler'
 import { CommandHandler } from 'handlers/CommandHandler'
-import { Manager } from 'erela.js'
-import { Spotify } from 'better-erela.js-spotify'
-import config from '../../config.json'
+
 import { Utils } from 'utils/Utils'
 import { logger } from 'utils/Logger'
 import commandChecks from 'utils/CommandChecks'
-import Jsoning from 'jsoning'
-const db = new Jsoning('db.json')
+
+import config from '../../config.json'
+
 
 export class Client extends CommandClient {
 
   public constructor() {
     super(process.env['DISCORD_TOKEN'] as string,
       {
-        intents: ['guildMessages', 'guildVoiceStates', 'guilds', 'guildMessageReactions', 'guildMembers'],
+        intents: ['guildMessages', 'guildVoiceStates', 'guilds', 'guildMessageReactions', 'guildMembers']
       },
       {
         prefix: config.prefixes,
@@ -38,20 +43,27 @@ export class Client extends CommandClient {
   }
 
   public utils = new Utils(this)
-  public db = db
   public logger = logger
   public config = config
 
-  public erela = new Manager({
-    nodes: config.nodes,
+  public kazagumo = new Kazagumo({
     plugins: [
-      new Spotify()
+      new Apple({
+        countryCode: 'us',
+        imageWidth: 600,
+        imageHeight: 900
+      }),
+      new KazagumoFilter(),
+      new Deezer()
     ],
+    
+    defaultSearchEngine: 'youtube',
+
     send: (id, payload) => {
       const guild = this.guilds.get(id)
       if (guild) guild.shard.sendWS(payload.op, payload.d)
     }
-  })
+  }, new Connectors.Eris(this), config.nodes)
 
   public init() {
     this.connect()

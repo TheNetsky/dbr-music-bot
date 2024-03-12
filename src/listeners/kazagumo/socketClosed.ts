@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { Player } from 'erela.js'
+import { KazagumoPlayer } from 'kazagumo'
 
 
 export default class socketClosedEvent extends Event {
@@ -8,7 +8,7 @@ export default class socketClosedEvent extends Event {
     super(client, 'socketClosed', true)
   }
 
-  async execute(client: Client, player: Player, payload) {
+  async execute(client: Client, player: KazagumoPlayer, payload) {
     const allowedOpCodes = ['4006', '4015', '4011', '4012']
 
     if (allowedOpCodes.includes(payload?.code)) {

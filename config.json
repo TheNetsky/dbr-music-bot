@@ -6,14 +6,20 @@
   ],
   "nodes": [
     {
-      "identifier": "NODE-MAIN-2",
-      "host": "192.168.1.28",
-      "password": "youshallnotpass",
-      "port": 2333,
+      "name": "NODE-MAIN-1",
+      "url": "127.0.0.1:443",
+      "auth": "youshallnotpass",
       "secure": false
     }
   ],
   "prefixes": [
     "!"
-  ]
+  ],
+  "preferences": {
+    "leaveQueueEnd": false,
+    "DJRoleOnly" : false,
+    "DJRole" : "",
+    "musicChannelOnly": false,
+    "musicChannel" : ""
+  }
 }

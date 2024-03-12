@@ -1,6 +1,6 @@
 import { Client } from 'structures/Client'
 import { Event } from 'structures/Event'
-import { Node } from 'erela.js'
+import { Node } from 'shoukaku'
 
 
 export default class nodeDestroyEvent extends Event {
@@ -9,6 +9,6 @@ export default class nodeDestroyEvent extends Event {
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.warn(`${node.options.identifier}`, 'DESTROYED')
+    client.logger.warn(`${node.name}`, 'DESTROYED')
   }
 }

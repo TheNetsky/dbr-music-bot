@@ -1,4 +1,5 @@
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -7,13 +8,12 @@ export default class PreviousCommand extends Command {
     super('previous', async (msg) => {
 
       try {
-        const guildPlayer = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              color: 'YELLOW',
               description: '⛔ | There no music playing in this guild.'
-            })]
+            }, 'YELLOW')]
           })
           return
         }
@@ -23,16 +23,15 @@ export default class PreviousCommand extends Command {
         if (!guildPlayer.queue.previous) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              color: 'YELLOW',
               description: '⛔ | The is no previous track.'
-            })]
+            }, 'YELLOW')]
           })
           return
         }
 
-        guildPlayer.queue.add(guildPlayer.queue.previous)
-        guildPlayer.queue.unshift(guildPlayer.queue.previous)
-        guildPlayer.stop()
+        guildPlayer.queue.add(guildPlayer.getPrevious()[0])
+        guildPlayer.queue.unshift(guildPlayer.getPrevious()[0])
+        guildPlayer.shoukaku.stopTrack()
 
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
@@ -45,9 +44,8 @@ export default class PreviousCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'YELLOW',
             description: '⛔ | An error occured.'
-          })]
+          }, 'YELLOW')]
         })
         return
       }

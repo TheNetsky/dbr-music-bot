@@ -1,4 +1,5 @@
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -7,10 +8,9 @@ export default class SeekCommand extends Command {
     super('seek', async (msg, args) => {
 
       try {
-
         const timeArg = args[0]
 
-        const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -33,7 +33,7 @@ export default class SeekCommand extends Command {
 
         const timeMS = Number(timeArg) * 1000
 
-        if (isNaN(timeMS) || timeMS > guildPlayer.queue.current?.duration) {
+        if (isNaN(timeMS) || timeMS > (guildPlayer.queue.current?.length ?? 0)) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
               description: '⛔ | You seek time is out of range of the track\' duration.'
@@ -46,11 +46,11 @@ export default class SeekCommand extends Command {
 
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            description: `✅ | Time skipped.`,
+            description: '✅ | Time skipped.',
             fields: [
               {
                 name: 'Progress',
-                value: `\`${this.client.utils.getDurationString(timeMS)}\` ${this.client.utils.createSeekbar(timeMS, guildPlayer.queue.current.duration, 10).bar} \`${this.client.utils.getDurationString(guildPlayer.queue.current.duration)}\``
+                value: `\`${this.client.utils.getDurationString(timeMS)}\` ${this.client.utils.createSeekbar(timeMS, guildPlayer.queue.current.length ?? 0, 10).bar} \`${this.client.utils.getDurationString(guildPlayer.queue.current.length ?? 0)}\``
               }
             ]
           })]
@@ -61,9 +61,8 @@ export default class SeekCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
         return
       }

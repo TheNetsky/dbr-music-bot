@@ -23,14 +23,18 @@ export class EventHandler {
       if (!event) continue
       await validateFile(file, event)
 
-      const isErela = file.includes('erela')
+      const isKazagumo= file.includes('kazagumo"')
 
       if (!event.execute) {
         throw new TypeError(`[ERROR][events]: execute function is required for events! (${file})`)
       }
 
-      if (isErela) {
-        this.client.erela.on(event.name as any, event.execute.bind(null, this.client))
+      if (isKazagumo) {
+        if (event.once) {
+          this.client.kazagumo.shoukaku.once(event.name as any, event.execute.bind(null, this.client))
+        } else {
+          this.client.kazagumo.shoukaku.on(event.name as any, event.execute.bind(null, this.client))
+        }
       } else if (event.once) {
         this.client.once(event.name, event.execute.bind(null, this.client))
       } else {

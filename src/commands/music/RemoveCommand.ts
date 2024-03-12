@@ -1,5 +1,6 @@
 
 import { Command } from 'eris'
+
 import { Client } from 'structures/Client'
 
 
@@ -13,16 +14,15 @@ export default class RemoveCommand extends Command {
         if (!trackArg || isNaN(Number(trackArg))) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              color: 'YELLOW',
               description: '⛔ | No arguments provided.'
-            })]
+            }, 'YELLOW')]
           })
           return
         }
 
         trackArg = Number(trackArg)
 
-        const guildPlayer: any = this.client.erela.players.get(msg.guildID as string)
+        const guildPlayer: any = this.client.kazagumo.players.get(msg.guildID as string)
         if (!guildPlayer) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -37,7 +37,7 @@ export default class RemoveCommand extends Command {
         if (trackArg > guildPlayer.queue.size || trackArg < 1) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              description: '⛔ | There\'s no track with this queue position.\nUse the \`queue\` command to see the current queue.'
+              description: '⛔ | There\'s no track with this queue position.\nUse the `queue` command to see the current queue.'
             })]
           })
           return
@@ -56,9 +56,8 @@ export default class RemoveCommand extends Command {
         this.client.logger.error('CMD', e)
         msg.channel.createMessage({
           embeds: [this.client.utils.createEmbed({
-            color: 'RED',
             description: '⛔ | An error occured.'
-          })]
+          }, 'RED')]
         })
         return
       }
