@@ -11,7 +11,7 @@ export default class playerStartEvent extends Event {
   }
 
   async execute(client: Client, player: KazagumoPlayer, track: KazagumoTrack) {
-    const queueChannel = client.getChannel(player.voiceId as string) as TextChannel
+    const queueChannel = client.getChannel(player.textId as string) as TextChannel
     if (!queueChannel) return
 
     const sendMessage = await queueChannel.createMessage({

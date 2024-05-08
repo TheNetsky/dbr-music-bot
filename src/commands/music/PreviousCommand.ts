@@ -29,8 +29,8 @@ export default class PreviousCommand extends Command {
           return
         }
 
-        guildPlayer.queue.add(guildPlayer.getPrevious()[0])
-        guildPlayer.queue.unshift(guildPlayer.getPrevious()[0])
+        guildPlayer.queue.add(guildPlayer.getPrevious()![0])
+        guildPlayer.queue.unshift(guildPlayer.getPrevious()![0])
         guildPlayer.shoukaku.stopTrack()
 
         msg.channel.createMessage({

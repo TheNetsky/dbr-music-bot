@@ -36,7 +36,7 @@ export default class SeekCommand extends Command {
         if (isNaN(timeMS) || timeMS > (guildPlayer.queue.current?.length ?? 0)) {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
-              description: '⛔ | You seek time is out of range of the track\' duration.'
+              description: '⛔ | Your seek time is out of range of the track\'s duration.'
             })]
           })
           return

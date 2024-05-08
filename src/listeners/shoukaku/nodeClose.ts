@@ -4,12 +4,12 @@ import { Client } from '../../structures/Client'
 import { Event } from '../../structures/Event'
 
 
-export default class nodeConnectEvent extends Event {
+export default class nodeCloseEvent extends Event {
   constructor(client: Client) {
-    super(client, 'nodeConnect', true)
+    super(client, 'close', true)
   }
 
   async execute(client: Client, node: Node) {
-    client.logger.info(`${node.name}`, 'CONNECTED')
+    client.logger.warn(`${node}`, 'DESTROYED')
   }
 }

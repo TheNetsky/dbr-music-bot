@@ -6,10 +6,10 @@ import { Event } from '../../structures/Event'
 
 export default class nodeErrorEvent extends Event {
   constructor(client: Client) {
-    super(client, 'nodeError', true)
+    super(client, 'error', true)
   }
 
   async execute(client: Client, node: Node, error: Error) {
-    client.logger.error(`${node.name}`, error)
+    client.logger.error(`${node}`, error)
   }
 }

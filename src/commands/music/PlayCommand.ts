@@ -30,7 +30,6 @@ export default class PlayCommand extends Command {
         const queryArg = args.join(' ')
 
         const musicTrack = await this.client.kazagumo.search(queryArg, { requester: msg.author })
-        console.log(musicTrack)
         
         if (musicTrack.type === 'SEARCH') {
           msg.channel.createMessage({

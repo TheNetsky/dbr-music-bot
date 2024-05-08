@@ -1,5 +1,4 @@
-import { KazagumoPlayer } from 'kazagumo'
-import { VoiceChannel } from 'eris'
+import { KazagumoPlayer, PlayerMovedChannels, PlayerMovedState } from 'kazagumo'
 
 import { Client } from '../../structures/Client'
 import { Event } from '../../structures/Event'
@@ -10,16 +9,17 @@ export default class playerMovedEvent extends Event {
     super(client, 'playerMoved', true)
   }
 
-  async execute(client: Client, player: KazagumoPlayer, oldChannel: VoiceChannel, newChannel: VoiceChannel) {
+  async execute(client: Client, player: KazagumoPlayer, state: PlayerMovedState, channels: PlayerMovedChannels) {
 
-    try {
-      player.setVoiceChannel(newChannel.id ?? player.textId)
-    } catch (e) {
-      player.destroy()
+    if (state === 'MOVED') {
+      try {
+        player.setVoiceChannel(channels.newChannelId ? channels.newChannelId : player.voiceId ? player.voiceId : '')
+      } catch (e) {
+        player.destroy()
+      }
+
+      setTimeout(() => player.pause(false), 3000)
+      return
     }
-
-    player.textId = newChannel.id
-    setTimeout(() => player.pause(false), 3000)
-    return
   }
-}
+} 

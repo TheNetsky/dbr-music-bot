@@ -6,10 +6,10 @@ import { Event } from '../../structures/Event'
 
 export default class nodeDisconnectEvent extends Event {
   constructor(client: Client) {
-    super(client, 'nodeDisconnect', true)
+    super(client, 'disconnect', true)
   }
 
-  async execute(client: Client, node: Node) {
-    client.logger.warn(`${node.name}`, 'DISCONNECTED')
+  async execute(client: Client, node: Node, code: number, reason: string) {
+    client.logger.warn(`${node}`, `CLOSED CODE: ${code} REASON: ${reason}`)
   }
 }
