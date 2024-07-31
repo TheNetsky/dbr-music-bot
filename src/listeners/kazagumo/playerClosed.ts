@@ -2,14 +2,12 @@ import { Client } from '../../structures/Client'
 import { Event } from '../../structures/Event'
 
 
-export default class ReadyEvent extends Event {
+export default class playerClosedEvent extends Event {
   constructor(client: Client) {
-    super(client, 'ready', true)
+    super(client, 'playerDestroy', true)
   }
 
   async execute(client: Client) {
-    client.logger.info('CLIENT','READY!')
-    
     client.editStatus('idle', { name: 'Buurman & Buurman, B2B!', type: 2 })
   }
 }

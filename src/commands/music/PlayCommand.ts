@@ -30,7 +30,7 @@ export default class PlayCommand extends Command {
         const queryArg = args.join(' ')
 
         const musicTrack = await this.client.kazagumo.search(queryArg, { requester: msg.author })
-        
+
         if (musicTrack.type === 'SEARCH') {
           msg.channel.createMessage({
             embeds: [this.client.utils.createEmbed({
@@ -49,7 +49,7 @@ export default class PlayCommand extends Command {
             textId: msg.channel.id,
             deaf: true
           })
-          
+
           // Load playlist
           if (musicTrack.type === 'PLAYLIST') {
             for (const track of musicTrack.tracks) {
@@ -97,17 +97,22 @@ export default class PlayCommand extends Command {
               description: `✅ | Added Playlist ${musicTrack.playlistName} [<@${msg.author.id}>] [\`${musicTrack.tracks.length} tracks\`]`
             }, 'YELLOW')]
           })
-          return
+
+        } else {
+          // Load single track
+          guildPlayer.queue.add(musicTrack.tracks[0])
+
+          msg.channel.createMessage({
+            embeds: [this.client.utils.createEmbed({
+              description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
+            })]
+          })
         }
 
-        // Load single track
-        guildPlayer.queue.add(musicTrack.tracks[0])
-
-        msg.channel.createMessage({
-          embeds: [this.client.utils.createEmbed({
-            description: `✅ | Added track \`${musicTrack.tracks[0].title}\` [<@${msg.author.id}>]`
-          })]
-        })
+        // Only start playing if not already playing
+        if (!guildPlayer.playing) {
+          guildPlayer.play()
+        }
         return
 
       } catch (e) {

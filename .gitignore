@@ -4,3 +4,4 @@ logs
 compiled
 package-lock.json
 db.json
+/lavalink

@@ -46,7 +46,6 @@ export default async (message: Message): Promise<boolean> => {
     }
 
     if (command.category.toUpperCase() == 'MUSIC')
-
         // Check DJOnly
         if (client.config.preferences.DJRoleOnly && client.config.preferences.DJRole) {
             if (!message.member?.roles.includes(client.config.preferences.DJRole)) {

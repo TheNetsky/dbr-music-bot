@@ -15,8 +15,12 @@ import commandChecks from '../utils/CommandChecks'
 
 import config from '../../config.json'
 
-
 export class Client extends CommandClient {
+  public utils: Utils
+  public logger = logger
+  public config = config
+  public memStorage: Map<string, any>
+  public kazagumo: Kazagumo
 
   public constructor() {
     super(process.env['DISCORD_TOKEN'] as string,
@@ -38,32 +42,32 @@ export class Client extends CommandClient {
         }
       })
 
+    this.memStorage = new Map()
+
     new EventHandler(this).loadEvents()
     new CommandHandler(this).loadCommands()
+
+    this.utils = new Utils(this)
+
+    this.kazagumo = new Kazagumo({
+      plugins: [
+        new Apple({
+          countryCode: 'us',
+          imageWidth: 600,
+          imageHeight: 900
+        }),
+        new KazagumoFilter(),
+        new Deezer()
+      ],
+
+      defaultSearchEngine: 'youtube',
+
+      send: (id, payload) => {
+        const guild = this.guilds.get(id)
+        if (guild) guild.shard.sendWS(payload.op, payload.d)
+      }
+    }, new Connectors.Eris(this), config.nodes)
   }
-
-  public utils = new Utils(this)
-  public logger = logger
-  public config = config
-
-  public kazagumo = new Kazagumo({
-    plugins: [
-      new Apple({
-        countryCode: 'us',
-        imageWidth: 600,
-        imageHeight: 900
-      }),
-      new KazagumoFilter(),
-      new Deezer()
-    ],
-    
-    defaultSearchEngine: 'youtube',
-
-    send: (id, payload) => {
-      const guild = this.guilds.get(id)
-      if (guild) guild.shard.sendWS(payload.op, payload.d)
-    }
-  }, new Connectors.Eris(this), config.nodes)
 
   public init() {
     this.connect()
@@ -72,7 +76,7 @@ export class Client extends CommandClient {
 
 declare module 'eris' {
   export interface Command {
-    category: string,
-    client: Client
+    category: string;
+    client: Client;
   }
 }

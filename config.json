@@ -20,6 +20,8 @@
     "DJRoleOnly" : false,
     "DJRole" : "",
     "musicChannelOnly": false,
-    "musicChannel" : ""
+    "musicChannel" : "",
+    "keepQueueMessages" : true,
+    "playingAsPresence" : true
   }
 }
